@@ -66,3 +66,9 @@ class PostProcessor(object):
         scores = scores[si]
         classid = classid[si]
         
+        boxes = self.xywh2xyxy(self.infer_height, self.infer_width, self.input_height, self.input_width, boxes)
+        
+        indices = torchvision.ops.nms(boxes, scores, iou_threshold=self.iou_threshold).cpu()
+        result_boxes = boxes[indices, :].cpu()
+        result_scores = scores[indices].cpu()
+        result_classid = classid[indices].cpu()
