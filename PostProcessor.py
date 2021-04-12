@@ -52,3 +52,11 @@ class PostProcessor(object):
             y /= r_h
 
         return y
+    
+    def post_process(self, output):
+        num = int(output[0])
+        pred = np.reshape(output[1:], (-1, 6))[:num, :]
+        pred = torch.Tensor(pred).cuda()
+        boxes = pred[:, :4]
+        scores = pred[:, 4]
+        classid = pred[:, 5]
