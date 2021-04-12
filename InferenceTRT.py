@@ -55,7 +55,6 @@ class InferenceTRT(object):
                 host_outputs.append(host_mem)
         
         self.context = context
-        self.engine = engine
         self.input_ptr = input_ptr
         self.cuda_inputs = cuda_inputs
         self.cuda_outputs = cuda_outputs
