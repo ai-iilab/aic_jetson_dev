@@ -24,6 +24,20 @@ CONF_THRESH = 0.1
 IOU_THRESHOLD = 0.4
 
 def plot_one_box(x, img, color=None, label=None, line_thickness=None):
+    """
+    description: Plots one bounding box on image img,
+                 this function comes from YoLov5 project.
+    param: 
+        x:      a box likes [x1,y1,x2,y2]
+        img:    a opencv image object
+        color:  color to draw rectangle, such as (0,255,0)
+        label:  str
+        line_thickness: int
+    return:
+        no return
+
+    """
+    
     tl = (
         line_thickness or round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1
     )  # line/font thickness
