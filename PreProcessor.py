@@ -17,8 +17,14 @@ class PreProcessor(object):
     def __init__(self):
         print("PreProcessor init")
         
+        cfx = cuda.Device(0).make_context()
+        
+        self.cfx = cfx
+        
     def destroy(self):
         print("PreProcessor destroy")
+        
+        self.cfx.pop()
         
     def preprocess_image(self):
         """
