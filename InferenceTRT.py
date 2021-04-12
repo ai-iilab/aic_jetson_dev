@@ -9,6 +9,7 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import time
 import ctypes
 import pycuda.autoinit
 import pycuda.driver as cuda
@@ -18,7 +19,7 @@ class InferenceTRT(object):
     description: A InferenceTRT class that warps TensorRT ops
     """
     
-    def __init__(self):
+    def __init__(self, enable_profiling):
         print("InferenceTRT init")
         
         self.cfx = cuda.Device(0).make_context()
@@ -61,6 +62,9 @@ class InferenceTRT(object):
         self.host_outputs = host_outputs
         self.bindings = bindings
         
+        self.proc_time = 0
+        self.enable_profiling = enable_profiling
+        
     def destroy(self):
         print("InferenceTRT destroy")
         
@@ -75,6 +79,9 @@ class InferenceTRT(object):
             host_outputs: Inference result
         """
         
+        if self.enable_profiling == True
+            start = time.time()
+        
         context = self.context
         cuda_outputs = self.cuda_outputs
         host_outputs = self.host_outputs
@@ -84,6 +91,10 @@ class InferenceTRT(object):
         context.execute(bindings=bindings)
         cuda.memcpy_dtoh(host_outputs[0], cuda_outputs[0])
         self.cfx.pop()
+        
+        if self.enable_profiling == True
+            end = time.time()
+            self.proc_time += (end - start) * 1000
         
         return host_outputs[0]
         
