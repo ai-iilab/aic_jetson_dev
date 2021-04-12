@@ -62,13 +62,23 @@ class PreProcessor(object):
         return: 
         """
         
+        input_width = self.input_width
+        input_height = self.input_height
+        
+        infer_width = self.infer_width
+        infer_height = self.infer_height
+        
+        d_img = self.d_img
+        d_img_temp = self.d_img_temp
+        d_img_resize = self.d_img_resize
+        
         UCHARP = ctypes.POINTER(ctypes.c_ubyte)
         FLOATP = ctypes.POINTER(ctypes.c_float)
         VOIDP = ctypes.POINTER(ctypes.c_void_p)
         
         self.cfx.push()
-        cuda.memcpy_htod(self.d_img.ptr, input_image.ravel())
-        self.pre_process_lib.ImagePreProcessing(self.input_width, self.input_height, self.infer_width, self.infer_height, ctypes.cast(self.d_img.ptr, UCHARP), ctypes.cast(self.d_img_temp.ptr, UCHARP), ctypes.cast(self.d_img_resize.ptr, UCHARP), ctypes.cast(infer_ptr, FLOATP), 0)
+        cuda.memcpy_htod(d_img.ptr, input_image.ravel())
+        self.pre_process_lib.ImagePreProcessing(input_width, input_height, infer_width, infer_height, ctypes.cast(d_img.ptr, UCHARP), ctypes.cast(d_img_temp.ptr, UCHARP), ctypes.cast(d_img_resize.ptr, UCHARP), ctypes.cast(infer_ptr, FLOATP), 0)
         self.cfx.pop()
         
-        return self.d_img_resize.ptr
+        return d_img_resize.ptr
