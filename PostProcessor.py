@@ -54,6 +54,16 @@ class PostProcessor(object):
         return y
     
     def post_process(self, output):
+        """
+        description: postprocess the prediction
+        param:
+            output:     A tensor likes [num_boxes,cx,cy,w,h,conf,cls_id, cx,cy,w,h,conf,cls_id, ...] 
+        return:
+            result_boxes: finally boxes, a boxes tensor, each row is a box [x1, y1, x2, y2]
+            result_scores: finally scores, a tensor, each element is the score correspoing to box
+            result_classid: finally classid, a tensor, each element is the classid correspoing to box
+        """
+        
         num = int(output[0])
         pred = np.reshape(output[1:], (-1, 6))[:num, :]
         pred = torch.Tensor(pred).cuda()
