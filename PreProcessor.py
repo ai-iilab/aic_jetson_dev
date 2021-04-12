@@ -55,13 +55,18 @@ class PreProcessor(object):
         
         self.cfx.pop()
         
-    def preprocess_image(self, input_image):
+    def preprocess_image(self, input_image, infer_ptr):
         """
         description: 
         param: 
         return: 
         """
         
+        UCHARP = ctypes.POINTER(ctypes.c_ubyte)
+        FLOATP = ctypes.POINTER(ctypes.c_float)
+        VOIDP = ctypes.POINTER(ctypes.c_void_p)
+        
         self.cfx.push()
         cuda.memcpy_htod(self.d_img.ptr, input_image.ravel())
+        self.pre_process_lib.ImagePreProcessing(self.input_width, self.input_height, self.infer_width, self.infer_height, ctypes.cast(self.d_img.ptr, UCHARP), ctypes.cast(self.d_img_temp.ptr, UCHARP), ctypes.cast(self.d_img_resize.ptr, UCHARP), ctypes.cast(infer_ptr, FLOATP), 0)
         self.cfx.pop()
