@@ -33,3 +33,22 @@ class PostProcessor(object):
     
     def destroy(self):
         print("PostProcessor destroy")
+
+    def xywh2xyxy(self, infer_h, infer_w, origin_h, origin_w, x):
+        y = torch.zeros_like(x) if isinstance(x, torch.Tensor) else np.zeros_like(x)
+        r_w = infer_w / origin_w
+        r_h = infer_h / origin_h
+        if r_h > r_w:
+            y[:, 0] = x[:, 0] - x[:, 2] / 2
+            y[:, 2] = x[:, 0] + x[:, 2] / 2
+            y[:, 1] = x[:, 1] - x[:, 3] / 2 - (infer_h - r_w * origin_h) / 2
+            y[:, 3] = x[:, 1] + x[:, 3] / 2 - (infer_h - r_w * origin_h) / 2
+            y /= r_w
+        else:
+            y[:, 0] = x[:, 0] - x[:, 2] / 2 - (infer_w - r_h * origin_w) / 2
+            y[:, 2] = x[:, 0] + x[:, 2] / 2 - (infer_w - r_h * origin_w) / 2
+            y[:, 1] = x[:, 1] - x[:, 3] / 2
+            y[:, 3] = x[:, 1] + x[:, 3] / 2
+            y /= r_h
+
+        return y
