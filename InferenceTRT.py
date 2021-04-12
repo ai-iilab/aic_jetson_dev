@@ -13,6 +13,7 @@ import time
 import ctypes
 import pycuda.autoinit
 import pycuda.driver as cuda
+import tensorrt as trt
 
 class InferenceTRT(object):
     """
