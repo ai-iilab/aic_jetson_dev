@@ -21,7 +21,7 @@ class PreProcessor(object):
     description: A PreProcessor class that warps preprocess ops.
     """
     
-    def __init__(self, input_shape, infer_shape):
+    def __init__(self, input_shape, infer_shape, enable_profiling):
         print("PreProcessor init")
         
         cfx = cuda.Device(0).make_context()
@@ -53,6 +53,7 @@ class PreProcessor(object):
         self.pre_process_lib = pre_process_lib
         
         self.proc_time = 0
+        self.enable_profiling = enable_profiling
         
     def destroy(self):
         print("PreProcessor destroy")
@@ -71,7 +72,8 @@ class PreProcessor(object):
             d_img_resize_ptr: the resized image
         """
         
-        start = time.time()
+        if self.enable_profiling == True
+            start = time.time()
         
         input_width = self.input_width
         input_height = self.input_height
@@ -92,7 +94,8 @@ class PreProcessor(object):
         self.pre_process_lib.ImagePreProcessing(input_width, input_height, infer_width, infer_height, ctypes.cast(d_img.ptr, UCHARP), ctypes.cast(d_img_temp.ptr, UCHARP), ctypes.cast(d_img_resize.ptr, UCHARP), ctypes.cast(infer_ptr, FLOATP), 0)
         self.cfx.pop()
         
-        end = time.time()
-        self.proc_time += (end - start) * 1000
+        if self.enable_profiling == True
+            end = time.time()
+            self.proc_time += (end - start) * 1000
         
         return d_img_resize.ptr
