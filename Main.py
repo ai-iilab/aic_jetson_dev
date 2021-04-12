@@ -15,6 +15,7 @@ from PreProcessor import PreProcessor
 from InferenceTRT import InferenceTRT
 from PostProcessor import PostProcessor
 
+ENABLE_WRITE_OUTPUT = True
 ENABLE_TIME_PROFILE = False
 CONF_THRESH = 0.1
 IOU_THRESHOLD = 0.4
@@ -65,8 +66,9 @@ class myThread(threading.Thread):
                 ),
             )
 
-        save_name = "output/0000_V0000_%03d.jpg" % index
-        cv2.imwrite(save_name, h_img)
+        if ENABLE_WRITE_OUTPUT == True:
+            save_name = "output/0000_V0000_%03d.jpg" % index
+            cv2.imwrite(save_name, h_img)
 
 if __name__ == "__main__":
     pre_process_wrapper = PreProcessor((1080, 1920, 3), (608, 608, 3), ENABLE_TIME_PROFILE)
