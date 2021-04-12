@@ -58,9 +58,14 @@ class PreProcessor(object):
         
     def preprocess_image(self, input_image, infer_ptr):
         """
-        description: 
-        param: 
-        return: 
+        description: Get an image data from argument, copy it to GPU memory
+                     convert it to RGB, resize and pad it to target size, normalize to [0,1],
+                     transform to NCHW format, copy it to inference memory pointer.
+        param:
+            input_image: input_image
+            infer_ptr: inference memory pointer
+        return:
+            d_img_resize_ptr: the resized image
         """
         
         input_width = self.input_width
