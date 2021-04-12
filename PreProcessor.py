@@ -9,8 +9,10 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import numpy
 import pycuda.autoinit
 import pycuda.driver as cuda
+import pycuda.gpuarray as gpuarray
 
 class PreProcessor(object):
     """
