@@ -42,6 +42,32 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=None):
             lineType=cv2.LINE_AA,
         )
 
+class myThread(threading.Thread):
+    def __init__(self, pre_proc, infer_proc, post_proc, img):
+        threading.Thread.__init__(self)
+        self.pre_proc = pre_proc
+        self.infer_proc = infer_proc
+        self.post_proc = post_proc
+        self.img = img
+
+    def run(self):
+        self.pre_proc.preprocess_image(h_img, self.infer_proc.get_infer_ptr())
+        infer_result = self.infer_proc.inference()
+        result_boxes, result_scores, result_classid = self.post_proc.post_process(infer_result)
+  
+        for i in range(len(result_boxes)):
+            box = result_boxes[i]
+            plot_one_box(
+                box,
+                h_img,
+                label="{}:{:.2f}".format(
+                    categories[int(result_classid[i])], result_scores[i]
+                ),
+            )
+
+        save_name = "output/0000_V0000_%03d.jpg" % index
+        cv2.imwrite(save_name, h_img)
+
 if __name__ == "__main__":
     pre_process_wrapper = PreProcessor((1080, 1920, 3), (608, 608, 3), ENABLE_TIME_PROFILE)
     inference_trt_wrapper = InferenceTRT("yolov5s_FP16.engine", ENABLE_TIME_PROFILE)
@@ -54,6 +80,10 @@ if __name__ == "__main__":
         print(image_path)
         
         h_img = cv2.imread(image_path)
+        
+        thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img)
+        thread1.start()
+        thread1.join()
     
     pre_process_wrapper.destroy()
     inference_trt_wrapper.destroy()
