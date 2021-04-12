@@ -19,7 +19,7 @@ class InferenceTRT(object):
     description: A InferenceTRT class that warps TensorRT ops
     """
     
-    def __init__(self, enable_profiling):
+    def __init__(self, engine_file_path, enable_profiling):
         print("InferenceTRT init")
         
         self.cfx = cuda.Device(0).make_context()
