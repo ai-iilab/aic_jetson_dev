@@ -73,12 +73,17 @@ class InferenceTRT(object):
         return:
         """
         
+        context = self.context
+        cuda_outputs = self.cuda_outputs
+        host_outputs = self.host_outputs
+        bindings = self.bindings
+        
         self.cfx.push()
-        context.execute(bindings=self.bindings)
-        cuda.memcpy_dtoh(self.host_outputs[0], self.cuda_outputs[0])
+        context.execute(bindings=bindings)
+        cuda.memcpy_dtoh(host_outputs[0], cuda_outputs[0])
         self.cfx.pop()
         
-        return self.host_outputs[0]
+        return host_outputs[0]
         
     def get_infer_ptr(self):
         return self.input_ptr
