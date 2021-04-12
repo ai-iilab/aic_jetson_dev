@@ -17,12 +17,18 @@ class PreProcessor(object):
     description: A PreProcessor class that warps preprocess ops.
     """
     
-    def __init__(self):
+    def __init__(self, input_shape):
         print("PreProcessor init")
         
         cfx = cuda.Device(0).make_context()
         
+        input_height, input_width, input_channel = input_shape
+        
         self.cfx = cfx
+        
+        self.input_width = input_width
+        self.input_height = input_height
+        self.input_channel = input_channel
         
     def destroy(self):
         print("PreProcessor destroy")
