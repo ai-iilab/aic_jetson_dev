@@ -9,6 +9,8 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import cv2
+
 from PreProcessor import PreProcessor
 from InferenceTRT import InferenceTRT
 from PostProcessor import PostProcessor
