@@ -9,6 +9,7 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import time
 import ctypes
 import numpy
 import pycuda.autoinit
@@ -51,6 +52,8 @@ class PreProcessor(object):
         
         self.pre_process_lib = pre_process_lib
         
+        self.proc_time = 0
+        
     def destroy(self):
         print("PreProcessor destroy")
         
@@ -67,6 +70,8 @@ class PreProcessor(object):
         return:
             d_img_resize_ptr: the resized image
         """
+        
+        start = time.time()
         
         input_width = self.input_width
         input_height = self.input_height
@@ -86,5 +91,8 @@ class PreProcessor(object):
         cuda.memcpy_htod(d_img.ptr, input_image.ravel())
         self.pre_process_lib.ImagePreProcessing(input_width, input_height, infer_width, infer_height, ctypes.cast(d_img.ptr, UCHARP), ctypes.cast(d_img_temp.ptr, UCHARP), ctypes.cast(d_img_resize.ptr, UCHARP), ctypes.cast(infer_ptr, FLOATP), 0)
         self.cfx.pop()
+        
+        end = time.time()
+        self.proc_time += (end - start) * 1000
         
         return d_img_resize.ptr
