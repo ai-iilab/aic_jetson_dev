@@ -55,9 +55,13 @@ class PreProcessor(object):
         
         self.cfx.pop()
         
-    def preprocess_image(self):
+    def preprocess_image(self, input_image):
         """
         description: 
         param: 
         return: 
         """
+        
+        self.cfx.push()
+        cuda.memcpy_htod(self.d_img.ptr, input_image.ravel())
+        self.cfx.pop()
