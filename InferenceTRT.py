@@ -8,3 +8,14 @@ Authors: Jinwoo Jeong <jw.jeong@keti.re.kr>
 The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
+
+class InferenceTRT(object):
+    """
+    description: A InferenceTRT class that warps TensorRT ops
+    """
+    
+    def __init__(self):
+        print("InferenceTRT init")
+        
+    def destroy(self):
+        print("InferenceTRT destroy")
