@@ -68,9 +68,11 @@ class InferenceTRT(object):
         
     def inference(self):
         """
-        description:
+        description: Execute inference and return inference result
         param:
+            None
         return:
+            host_outputs: Inference result
         """
         
         context = self.context
