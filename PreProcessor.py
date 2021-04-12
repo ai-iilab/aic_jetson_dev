@@ -31,6 +31,9 @@ class PreProcessor(object):
         d_img_temp = gpuarray.empty(infer_shape, numpy.uint8)
         d_img_resize = gpuarray.empty(infer_shape, numpy.uint8)
         
+        pre_process_lib = ctypes.cdll.LoadLibrary("CUDA_PreProcessor.so")
+        pre_process_lib.ImagePadding.argtypes = (ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_float), ctypes.c_int)
+        
         self.cfx = cfx
         
         self.input_width = input_width
@@ -44,6 +47,8 @@ class PreProcessor(object):
         self.d_img = d_img
         self.d_img_temp = d_img_temp
         self.d_img_resize = d_img_resize
+        
+        self.pre_process_lib = pre_process_lib
         
     def destroy(self):
         print("PreProcessor destroy")
