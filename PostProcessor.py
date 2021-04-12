@@ -60,3 +60,9 @@ class PostProcessor(object):
         boxes = pred[:, :4]
         scores = pred[:, 4]
         classid = pred[:, 5]
+        
+        si = scores > self.conf_threshold
+        boxes = boxes[si, :]
+        scores = scores[si]
+        classid = classid[si]
+        
