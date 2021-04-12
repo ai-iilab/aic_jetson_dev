@@ -35,6 +35,18 @@ class PostProcessor(object):
         print("PostProcessor destroy")
 
     def xywh2xyxy(self, infer_h, infer_w, origin_h, origin_w, x):
+        """
+        description:    Convert nx4 boxes from [x, y, w, h] to [x1, y1, x2, y2] where xy1=top-left, xy2=bottom-right
+        param:
+            infer_h:    height of inference image
+            infer_w:    width of inference image
+            origin_h:   height of original image
+            origin_w:   width of original image
+            x:          A boxes tensor, each row is a box [center_x, center_y, w, h]
+        return:
+            y:          A boxes tensor, each row is a box [x1, y1, x2, y2]
+        """
+        
         y = torch.zeros_like(x) if isinstance(x, torch.Tensor) else np.zeros_like(x)
         r_w = infer_w / origin_w
         r_h = infer_h / origin_h
