@@ -19,3 +19,10 @@ class PreProcessor(object):
         
     def destroy(self):
         print("PreProcessor destroy")
+        
+    def preprocess_image(self):
+        """
+        description: 
+        param: 
+        return: 
+        """
