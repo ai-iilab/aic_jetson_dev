@@ -32,7 +32,7 @@ class PreProcessor(object):
         d_img_resize = gpuarray.empty(infer_shape, numpy.uint8)
         
         pre_process_lib = ctypes.cdll.LoadLibrary("CUDA_PreProcessor.so")
-        pre_process_lib.ImagePadding.argtypes = (ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_float), ctypes.c_int)
+        pre_process_lib.ImagePreProcessing.argtypes = (ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_float), ctypes.c_int)
         
         self.cfx = cfx
         
