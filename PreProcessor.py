@@ -9,6 +9,9 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import pycuda.autoinit
+import pycuda.driver as cuda
+
 class PreProcessor(object):
     """
     description: A PreProcessor class that warps preprocess ops.
