@@ -70,3 +70,5 @@ class PreProcessor(object):
         cuda.memcpy_htod(self.d_img.ptr, input_image.ravel())
         self.pre_process_lib.ImagePreProcessing(self.input_width, self.input_height, self.infer_width, self.infer_height, ctypes.cast(self.d_img.ptr, UCHARP), ctypes.cast(self.d_img_temp.ptr, UCHARP), ctypes.cast(self.d_img_resize.ptr, UCHARP), ctypes.cast(infer_ptr, FLOATP), 0)
         self.cfx.pop()
+        
+        return self.d_img_resize.ptr
