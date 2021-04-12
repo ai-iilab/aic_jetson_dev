@@ -31,6 +31,28 @@ class InferenceTRT(object):
             engine = runtime.deserialize_cuda_engine(f.read())
         context = engine.create_execution_context()
         
+        input_size = 0
+        cuda_inputs = []
+        cuda_outputs = []
+        host_outputs = []
+        bindings = []
+
+        for binding in engine:
+            size = trt.volume(engine.get_binding_shape(binding)) * engine.max_batch_size
+            dtype = trt.nptype(engine.get_binding_dtype(binding))
+            
+            gpu_array = gpuarray.empty(size, dtype)
+            cuda_mem = gpu_array.gpudata
+            bindings.append(int(cuda_mem))
+            
+            if engine.binding_is_input(binding):
+                cuda_inputs.append(cuda_mem)
+                input_ptr = gpu_array.ptr
+            else:
+                cuda_outputs.append(cuda_mem)
+                host_mem = cuda.pagelocked_empty(size, dtype)
+                host_outputs.append(host_mem)
+        
         self.context = context
         
     def destroy(self):
