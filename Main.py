@@ -9,6 +9,8 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import random
+import threading
 import cv2
 
 from PreProcessor import PreProcessor
