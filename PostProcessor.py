@@ -72,3 +72,5 @@ class PostProcessor(object):
         result_boxes = boxes[indices, :].cpu()
         result_scores = scores[indices].cpu()
         result_classid = classid[indices].cpu()
+        
+        return result_boxes, result_scores, result_classid
