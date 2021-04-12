@@ -9,6 +9,7 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import ctypes
 import pycuda.autoinit
 import pycuda.driver as cuda
 
@@ -21,6 +22,7 @@ class InferenceTRT(object):
         print("InferenceTRT init")
         
         self.cfx = cuda.Device(0).make_context()
+        ctypes.CDLL("libyolov5trt.so")
         
         self.context = context
         
