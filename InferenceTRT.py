@@ -66,5 +66,19 @@ class InferenceTRT(object):
         
         self.cfx.pop()
         
+    def inference(self):
+        """
+        description:
+        param:
+        return:
+        """
+        
+        self.cfx.push()
+        context.execute(bindings=self.bindings)
+        cuda.memcpy_dtoh(self.host_outputs[0], self.cuda_outputs[0])
+        self.cfx.pop()
+        
+        return self.host_outputs[0]
+        
     def get_infer_ptr(self):
         return self.input_ptr
