@@ -25,6 +25,10 @@ class PreProcessor(object):
         input_height, input_width, input_channel = input_shape
         infer_height, infer_width, infer_channel = infer_shape
         
+        d_img = gpuarray.empty(input_shape, numpy.uint8)
+        d_img_temp = gpuarray.empty(infer_shape, numpy.uint8)
+        d_img_resize = gpuarray.empty(infer_shape, numpy.uint8)
+        
         self.cfx = cfx
         
         self.input_width = input_width
@@ -34,6 +38,10 @@ class PreProcessor(object):
         self.infer_width = infer_width
         self.infer_height = infer_height
         self.infer_channel = infer_channel
+        
+        self.d_img = d_img
+        self.d_img_temp = d_img_temp
+        self.d_img_resize = d_img_resize
         
     def destroy(self):
         print("PreProcessor destroy")
