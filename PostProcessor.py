@@ -9,6 +9,7 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import time
 import numpy
 import pycuda.autoinit
 import pycuda.driver as cuda
@@ -20,7 +21,7 @@ class PostProcessor(object):
     description: A PostProcessor class that warps postprocess ops.
     """
     
-    def __init__(self, input_shape, infer_shape, conf_threshold, iou_threshold):
+    def __init__(self, input_shape, infer_shape, conf_threshold, iou_threshold, enable_profiling):
         print("PostProcessor init")
         
         input_height, input_width, input_channel = input_shape
@@ -36,6 +37,9 @@ class PostProcessor(object):
         
         self.conf_threshold = conf_threshold
         self.iou_threshold = iou_threshold
+        
+        self.proc_time = 0
+        self.enable_profiling = enable_profiling
     
     def destroy(self):
         print("PostProcessor destroy")
@@ -82,6 +86,9 @@ class PostProcessor(object):
             result_classid: finally classid, a tensor, each element is the classid correspoing to box
         """
         
+        if self.enable_profiling == True
+            start = time.time()
+        
         num = int(output[0])
         pred = numpy.reshape(output[1:], (-1, 6))[:num, :]
         pred = torch.Tensor(pred).cuda()
@@ -100,5 +107,9 @@ class PostProcessor(object):
         result_boxes = boxes[indices, :].cpu()
         result_scores = scores[indices].cpu()
         result_classid = classid[indices].cpu()
+        
+        if self.enable_profiling == True
+            end = time.time()
+            self.proc_time += (end - start) * 1000
         
         return result_boxes, result_scores, result_classid
