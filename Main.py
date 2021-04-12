@@ -87,6 +87,13 @@ if __name__ == "__main__":
         thread1.start()
         thread1.join()
     
+    
+    if ENABLE_TIME_PROFILE == True:
+        print("\n")
+        print("Pre-process time  : ", pre_process_wrapper.proc_time / (end_frame - start_frame), " msec")
+        print("Inference time    : ", inference_trt_wrapper.proc_time / (end_frame - start_frame), " msec")
+        print("Post-process time : ", post_process_wrapper.proc_time / (end_frame - start_frame), " msec", "\n")
+    
     pre_process_wrapper.destroy()
     inference_trt_wrapper.destroy()
     post_process_wrapper.destroy()
