@@ -61,12 +61,13 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=None):
         )
 
 class myThread(threading.Thread):
-    def __init__(self, pre_proc, infer_proc, post_proc, input_img):
+    def __init__(self, pre_proc, infer_proc, post_proc, input_img, enable_write_output):
         threading.Thread.__init__(self)
         self.pre_proc = pre_proc
         self.infer_proc = infer_proc
         self.post_proc = post_proc
         self.input_img = input_img
+        self.enable_write_output = enable_write_output
 
     def run(self):
         self.pre_proc.preprocess_image(self.input_img, self.infer_proc.get_infer_ptr())
@@ -83,7 +84,7 @@ class myThread(threading.Thread):
                 ),
             )
 
-        if ENABLE_WRITE_OUTPUT == True:
+        if self.enable_write_output == True:
             save_name = "output/0000_V0000_%03d.jpg" % index
             cv2.imwrite(save_name, self.input_img)
 
@@ -108,7 +109,7 @@ if __name__ == "__main__":
             
             h_img = cv2.imread(image_path)
             
-            thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img)
+            thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, False)
             thread1.start()
             thread1.join()
         
@@ -124,7 +125,7 @@ if __name__ == "__main__":
         
         h_img = cv2.imread(image_path)
         
-        thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img)
+        thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
         thread1.start()
         thread1.join()
     
