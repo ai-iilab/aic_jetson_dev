@@ -14,8 +14,10 @@ class PostProcessor(object):
     description: A PostProcessor class that warps postprocess ops.
     """
     
-    def __init__(self):
+    def __init__(self, conf_threshold, iou_threshold):
         print("PostProcessor init")
+        self.conf_threshold = conf_threshold
+        self.iou_threshold = iou_threshold
     
     def destroy(self):
         print("PostProcessor destroy")
