@@ -65,3 +65,6 @@ class InferenceTRT(object):
         print("InferenceTRT destroy")
         
         self.cfx.pop()
+        
+    def get_infer_ptr(self):
+        return self.input_ptr
