@@ -24,6 +24,13 @@ class InferenceTRT(object):
         self.cfx = cuda.Device(0).make_context()
         ctypes.CDLL("libyolov5trt.so")
         
+        TRT_LOGGER = trt.Logger(trt.Logger.INFO)
+        runtime = trt.Runtime(TRT_LOGGER)
+
+        with open(engine_file_path, "rb") as f:
+            engine = runtime.deserialize_cuda_engine(f.read())
+        context = engine.create_execution_context()
+        
         self.context = context
         
     def destroy(self):
