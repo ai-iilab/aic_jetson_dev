@@ -21,7 +21,15 @@ if __name__ == "__main__":
     pre_process_wrapper = PreProcessor((1080, 1920, 3), (608, 608, 3), ENABLE_TIME_PROFILE)
     inference_trt_wrapper = InferenceTRT("yolov5s_FP16.engine", ENABLE_TIME_PROFILE)
     post_process_wrapper = PostProcessor((1080, 1920, 3), (608, 608, 3), CONF_THRESH, IOU_THRESHOLD, ENABLE_TIME_PROFILE)
-
+    
+    start_frame = 0
+    end_frame = 1000
+    for index in range(start_frame, end_frame):
+        image_path = "image/0000_V0000_%03d.jpg" % index
+        print(image_path)
+        
+        h_img = cv2.imread(image_path)
+    
     pre_process_wrapper.destroy()
     inference_trt_wrapper.destroy()
     post_process_wrapper.destroy()
