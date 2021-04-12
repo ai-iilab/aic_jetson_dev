@@ -78,7 +78,7 @@ class InferenceTRT(object):
             host_outputs: Inference result
         """
         
-        if self.enable_profiling == True
+        if self.enable_profiling == True:
             start = time.time()
         
         context = self.context
@@ -91,7 +91,7 @@ class InferenceTRT(object):
         cuda.memcpy_dtoh(host_outputs[0], cuda_outputs[0])
         self.cfx.pop()
         
-        if self.enable_profiling == True
+        if self.enable_profiling == True:
             end = time.time()
             self.proc_time += (end - start) * 1000
         

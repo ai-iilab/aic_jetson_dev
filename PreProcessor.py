@@ -72,7 +72,7 @@ class PreProcessor(object):
             d_img_resize_ptr: the resized image
         """
         
-        if self.enable_profiling == True
+        if self.enable_profiling == True:
             start = time.time()
         
         input_width = self.input_width
@@ -94,7 +94,7 @@ class PreProcessor(object):
         self.pre_process_lib.ImagePreProcessing(input_width, input_height, infer_width, infer_height, ctypes.cast(d_img.ptr, UCHARP), ctypes.cast(d_img_temp.ptr, UCHARP), ctypes.cast(d_img_resize.ptr, UCHARP), ctypes.cast(infer_ptr, FLOATP), 0)
         self.cfx.pop()
         
-        if self.enable_profiling == True
+        if self.enable_profiling == True:
             end = time.time()
             self.proc_time += (end - start) * 1000
         

@@ -86,7 +86,7 @@ class PostProcessor(object):
             result_classid: finally classid, a tensor, each element is the classid correspoing to box
         """
         
-        if self.enable_profiling == True
+        if self.enable_profiling == True:
             start = time.time()
         
         num = int(output[0])
@@ -108,7 +108,7 @@ class PostProcessor(object):
         result_scores = scores[indices].cpu()
         result_classid = classid[indices].cpu()
         
-        if self.enable_profiling == True
+        if self.enable_profiling == True:
             end = time.time()
             self.proc_time += (end - start) * 1000
         
