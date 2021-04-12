@@ -61,15 +61,15 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=None):
         )
 
 class myThread(threading.Thread):
-    def __init__(self, pre_proc, infer_proc, post_proc, img):
+    def __init__(self, pre_proc, infer_proc, post_proc, input_img):
         threading.Thread.__init__(self)
         self.pre_proc = pre_proc
         self.infer_proc = infer_proc
         self.post_proc = post_proc
-        self.img = img
+        self.input_img = input_img
 
     def run(self):
-        self.pre_proc.preprocess_image(h_img, self.infer_proc.get_infer_ptr())
+        self.pre_proc.preprocess_image(self.input_img, self.infer_proc.get_infer_ptr())
         infer_result = self.infer_proc.inference()
         result_boxes, result_scores, result_classid = self.post_proc.post_process(infer_result)
   
@@ -77,7 +77,7 @@ class myThread(threading.Thread):
             box = result_boxes[i]
             plot_one_box(
                 box,
-                h_img,
+                self.input_img,
                 label="{}:{:.2f}".format(
                     categories[int(result_classid[i])], result_scores[i]
                 ),
@@ -85,7 +85,7 @@ class myThread(threading.Thread):
 
         if ENABLE_WRITE_OUTPUT == True:
             save_name = "output/0000_V0000_%03d.jpg" % index
-            cv2.imwrite(save_name, h_img)
+            cv2.imwrite(save_name, self.input_img)
 
 if __name__ == "__main__":
     categories = ["person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
