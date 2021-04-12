@@ -9,6 +9,7 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import ctypes
 import numpy
 import pycuda.autoinit
 import pycuda.driver as cuda
