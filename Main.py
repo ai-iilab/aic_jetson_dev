@@ -15,6 +15,7 @@ from PreProcessor import PreProcessor
 from InferenceTRT import InferenceTRT
 from PostProcessor import PostProcessor
 
+ENABLE_DUMMY_INPUT = True
 ENABLE_WRITE_OUTPUT = True
 ENABLE_TIME_PROFILE = False
 CONF_THRESH = 0.1
@@ -74,6 +75,20 @@ if __name__ == "__main__":
     pre_process_wrapper = PreProcessor((1080, 1920, 3), (608, 608, 3), ENABLE_TIME_PROFILE)
     inference_trt_wrapper = InferenceTRT("yolov5s_FP16.engine", ENABLE_TIME_PROFILE)
     post_process_wrapper = PostProcessor((1080, 1920, 3), (608, 608, 3), CONF_THRESH, IOU_THRESHOLD, ENABLE_TIME_PROFILE)
+    
+    if ENABLE_DUMMY_INPUT == True:
+        for index in range(0, 10):
+            image_path = "image/0000_V0000_000.jpg"
+            
+            h_img = cv2.imread(image_path)
+            
+            thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img)
+            thread1.start()
+            thread1.join()
+        
+        pre_process_wrapper.proc_time = 0
+        inference_trt_wrapper.proc_time = 0
+        post_process_wrapper.proc_time = 0
     
     start_frame = 0
     end_frame = 1000
