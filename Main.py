@@ -8,7 +8,7 @@ Authors: Jinwoo Jeong <jw.jeong@keti.re.kr>
 The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
-
+import json
 import random
 import threading
 import cv2
@@ -68,11 +68,13 @@ class myThread(threading.Thread):
         self.post_proc = post_proc
         self.input_img = input_img
         self.enable_write_output = enable_write_output
+        self.annots = {'param_num': 1000, 'inference_time': 0, 'annotations': []}
 
     def run(self):
         self.pre_proc.preprocess_image(self.input_img, self.infer_proc.get_infer_ptr())
         infer_result = self.infer_proc.inference()
         result_boxes, result_scores, result_classid = self.post_proc.post_process(infer_result)
+        time = self.post_proc.post_process.proc_time
 
         if self.enable_write_output == True:
             for i in range(len(result_boxes)):
@@ -87,6 +89,24 @@ class myThread(threading.Thread):
             
             save_name = "output/0000_V0000_%03d.jpg" % index
             cv2.imwrite(save_name, self.input_img)
+            self.add_img_annot(save_name, result_boxes, result_scores, time)
+
+    def add_img_annot(self, file_name, boxes, scores, time):
+        # Sum inference time
+        self.annots['inference_time'] = self.annots['inference_time'] + time
+
+        # Store annotation per image
+        annotation = {'file_name': file_name, 'objects': []}
+        for b, p in zip(boxes.tolist(), scores.tolist()):
+            tmp = {'position': b, 'confidence_score': float(p)}
+        annotation['objects'].append(tmp)
+        self.annots['annotations'].append(annotation)
+
+    def save_json(self):
+        # Dump Json
+        with open('./result.json', 'w') as json_file:
+            json.dump(self.annots, json_file, indent=2)
+
 
 if __name__ == "__main__":
     categories = ["person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
@@ -100,7 +120,7 @@ if __name__ == "__main__":
             "hair drier", "toothbrush"]
 
     pre_process_wrapper = PreProcessor((1080, 1920, 3), (608, 608, 3), ENABLE_TIME_PROFILE)
-    inference_trt_wrapper = InferenceTRT("yolov5s_FP16.engine", ENABLE_TIME_PROFILE)
+    inference_trt_wrapper = InferenceTRT("yolov5s.engine", ENABLE_TIME_PROFILE)
     post_process_wrapper = PostProcessor((1080, 1920, 3), (608, 608, 3), CONF_THRESH, IOU_THRESHOLD, ENABLE_TIME_PROFILE)
     
     if ENABLE_DUMMY_INPUT == True:
@@ -129,7 +149,8 @@ if __name__ == "__main__":
         thread1.start()
         thread1.join()
     
-    
+    thread1.save_json()
+
     if ENABLE_TIME_PROFILE == True:
         print("\n")
         print("Pre-process time  : ", pre_process_wrapper.proc_time / (end_frame - start_frame), " msec")
