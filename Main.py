@@ -179,9 +179,9 @@ class ThreadTRT(threading.Thread):
         self.enable_write_json = enable_write_json
 
     def run(self):
-        self.pre_proc.preprocess_image(self.input_img, self.infer_proc.get_infer_ptr())
-        infer_result = self.infer_proc.inference()
-        result_boxes, result_scores, result_classid = self.post_proc.post_process(infer_result)
+        self.pre_proc.preprocess_image(self.input_img, self.infer_proc.get_infer_ptr(), self.batch_size)
+        infer_result = self.infer_proc.inference(self.batch_size)
+        result_boxes, result_scores, result_classid = self.post_proc.post_process(infer_result, self.batch_size)
 
         if self.enable_draw_box is True:
             self.draw_box(result_boxes, result_scores, result_classid)
