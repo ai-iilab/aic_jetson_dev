@@ -284,6 +284,9 @@ def main():
         print("Avg. Inference time    : ", inference_total_time / total_frame, " msec")
         print("Avg. Post-process time : ", post_process_total_time / total_frame, " msec", "\n")
     
+    if ENABLE_CAMERA_LIVE is True:
+        camera_wrapper.destroy()
+    
     pre_process_wrapper.destroy()
     inference_trt_wrapper.destroy()
     post_process_wrapper.destroy()
