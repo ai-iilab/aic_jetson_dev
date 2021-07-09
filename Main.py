@@ -87,6 +87,16 @@ text_color = [
     (0, 255, 255), (63, 255, 255), (127, 255, 255), (191, 255, 255), (255, 255, 255)
 ]
 
+def draw_fps(img, fps):
+    """
+    description: Draw fps on output image.
+    param:
+        img:    a opencv image object
+        fps:    fps value for overall process
+    return:
+        no return
+    """
+
 def plot_one_box(x, img, color=None, label=None, line_thickness=None):
     """
     description: Plots one bounding box on image img,
