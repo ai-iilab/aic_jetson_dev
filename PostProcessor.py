@@ -102,27 +102,34 @@ class PostProcessor(object):
         conf_threshold = self.conf_threshold
         iou_threshold = self.iou_threshold
         
-        num = int(output[0])
-        pred = np.reshape(output[1:], (-1, 6))[:num, :]
-        scores = pred[:, 4]
-        si = scores > conf_threshold
-        pred = pred[si, :]
+        result_boxes = None
+        result_scores = None
+        result_classid = None
         
-        pred = torch.Tensor(pred).cpu()
-        boxes = pred[:, :4]
-        scores = pred[:, 4]
-        classid = pred[:, 5]
-        
-        #boxes = boxes[si, :]
-        #scores = scores[si]
-        #classid = classid[si]
-        
-        boxes = self.xywh2xyxy(infer_height, infer_width, input_height, input_width, boxes)
-        
-        indices = torchvision.ops.nms(boxes, scores, iou_threshold=iou_threshold).cpu()
-        result_boxes = boxes[indices, :].cpu()
-        result_scores = scores[indices].cpu()
-        result_classid = classid[indices].cpu()
+        if batch_size > 1:
+            
+        else:
+            num = int(output[0])
+            pred = np.reshape(output[1:], (-1, 6))[:num, :]
+            scores = pred[:, 4]
+            si = scores > conf_threshold
+            pred = pred[si, :]
+            
+            pred = torch.Tensor(pred).cpu()
+            boxes = pred[:, :4]
+            scores = pred[:, 4]
+            classid = pred[:, 5]
+            
+            #boxes = boxes[si, :]
+            #scores = scores[si]
+            #classid = classid[si]
+            
+            boxes = self.xywh2xyxy(infer_height, infer_width, input_height, input_width, boxes)
+            
+            indices = torchvision.ops.nms(boxes, scores, iou_threshold=iou_threshold).cpu()
+            result_boxes = boxes[indices, :].cpu()
+            result_scores = scores[indices].cpu()
+            result_classid = classid[indices].cpu()
         
         if self.enable_profiling == True:
             end = time.time()
