@@ -107,6 +107,9 @@ class PostProcessor(object):
         result_classid = None
         
         if batch_size > 1:
+            tensor = np.reshape(output, (max_batch_size, int(output.size / max_batch_size)))
+            pred_arr = None
+            
             
         else:
             num = int(output[0])
