@@ -100,7 +100,13 @@ class PreProcessor(object):
         
         self.cfx.push()
         cuda.memcpy_htod(d_img.ptr, input_image.ravel())
-        self.pre_process_lib.ImagePreProcessing(input_width, input_height, infer_width, infer_height, ctypes.cast(d_img.ptr, UCHARP), ctypes.cast(d_img_temp.ptr, UCHARP), ctypes.cast(d_img_resize.ptr, UCHARP), ctypes.cast(infer_ptr, FLOATP), 0)
+        self.pre_process_lib.ImagePreProcessing(input_width, input_height,
+            infer_width, infer_height, batch_size,
+            ctypes.cast(d_img.ptr, UCHARP),
+            ctypes.cast(d_img_temp.ptr, UCHARP),
+            ctypes.cast(d_img_resize.ptr, UCHARP),
+            ctypes.cast(infer_ptr, FLOATP),
+            0)
         self.cfx.pop()
         
         if self.enable_profiling == True:
