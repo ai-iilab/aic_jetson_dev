@@ -165,14 +165,18 @@ def save_json(self):
         json.dump(self.annots, json_file, indent=2)
 
 class ThreadTRT(threading.Thread):
-    def __init__(self, pre_proc, infer_proc, post_proc, input_img, enable_write_output):
+    def __init__(self, pre_proc, infer_proc, post_proc, input_img, batch_size, annots, save_name, enable_draw_box, enable_write_json):
         threading.Thread.__init__(self)
         self.pre_proc = pre_proc
         self.infer_proc = infer_proc
         self.post_proc = post_proc
         self.input_img = input_img
-        self.enable_write_output = enable_write_output
-        self.annots = {'param_num': 1000, 'inference_time': 0, 'annotations': []}
+        self.batch_size = batch_size
+        self.annots = annots
+        self.save_name = save_name
+        
+        self.enable_draw_box = enable_draw_box
+        self.enable_write_json = enable_write_json
 
     def run(self):
         self.pre_proc.preprocess_image(self.input_img, self.infer_proc.get_infer_ptr())
