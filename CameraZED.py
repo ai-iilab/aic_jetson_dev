@@ -161,6 +161,10 @@ class CameraZED(object):
         return cameraMatrix_left, cameraMatrix_right, map_left_x, map_left_y, map_right_x, map_right_y
     
     def capture_left(self):
+        retval, frame = self.cap.read()
+        left_right_image = np.split(frame, 2, axis=1)
+        left_rect = cv2.remap(left_right_image[0], self.map_left_x, self.map_left_y, interpolation=cv2.INTER_LINEAR)
+        return left_rect
         
     def capture_right(self):
         
