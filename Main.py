@@ -46,6 +46,9 @@ if BATCH_SIZE > 1:
 
 CAMERA_TOTAL_FRAME = 1000
 
+ENGINE_PATH = "./yolov5s_w0.04_d0.33_BATCH32.engine"
+JSON_PATH = "./result.json"
+
 categories = ["person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
             "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow",
             "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee",
