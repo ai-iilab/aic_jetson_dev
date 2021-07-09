@@ -24,8 +24,8 @@ class PostProcessor(object):
     def __init__(self, input_shape, infer_shape, conf_threshold, iou_threshold, enable_profiling):
         print("PostProcessor init")
         
-        input_height, input_width, input_channel = input_shape
-        infer_height, infer_width, infer_channel = infer_shape
+        max_batch_size, input_height, input_width, input_channel = input_shape
+        max_batch_size, infer_height, infer_width, infer_channel = infer_shape
         
         self.input_width = input_width
         self.input_height = input_height
@@ -34,6 +34,8 @@ class PostProcessor(object):
         self.infer_width = infer_width
         self.infer_height = infer_height
         self.infer_channel = infer_channel
+        
+        self.max_batch_size = max_batch_size
         
         self.conf_threshold = conf_threshold
         self.iou_threshold = iou_threshold
