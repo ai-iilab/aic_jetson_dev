@@ -231,7 +231,10 @@ def main():
                 h_img = camera_wrapper.capture_left()
             else:
                 image_path = "image/test/%04d.jpg" % index
+                
                 h_img = cv2.imread(image_path)
+                if h_img is None:
+                    continue
             
             trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, False)
             trt_thread.start()
@@ -254,6 +257,9 @@ def main():
             print(image_path)
             
             h_img = cv2.imread(image_path)
+            if h_img is None:
+                continue
+            
             total_frame += 1
         
         trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
