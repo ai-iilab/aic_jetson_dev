@@ -233,9 +233,9 @@ def main():
                 image_path = "image/test/%04d.jpg" % index
                 h_img = cv2.imread(image_path)
             
-            thread1 = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, False)
-            thread1.start()
-            thread1.join()
+            trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, False)
+            trt_thread.start()
+            trt_thread.join()
         
         pre_process_wrapper.proc_time = 0
         inference_trt_wrapper.proc_time = 0
@@ -256,9 +256,9 @@ def main():
             h_img = cv2.imread(image_path)
             total_frame += 1
         
-        thread1 = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
-        thread1.start()
-        out_img, annots = thread1.join()
+        trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
+        trt_thread.start()
+        out_img, annots = trt_thread.join()
         
         if ENABLE_DRAW_FPS is True:
             fps = 1000 / (pre_process_wrapper.proc_time + inference_trt_wrapper.proc_time + post_process_wrapper.proc_time)
