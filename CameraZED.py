@@ -53,3 +53,5 @@ class CameraZED(object):
     
     def destroy(self):
         print("CameraZED destroy")
+        
+        self.cap.release()
