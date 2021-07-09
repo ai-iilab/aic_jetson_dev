@@ -159,7 +159,7 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=None):
             lineType=cv2.LINE_AA,
         )
 
-class myThread(threading.Thread):
+class ThreadTRT(threading.Thread):
     def __init__(self, pre_proc, infer_proc, post_proc, input_img, enable_write_output):
         threading.Thread.__init__(self)
         self.pre_proc = pre_proc
@@ -230,7 +230,7 @@ def main():
                 image_path = "image/0000_V0000_000.jpg"
                 h_img = cv2.imread(image_path)
             
-            thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, False)
+            thread1 = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, False)
             thread1.start()
             thread1.join()
         
@@ -249,7 +249,7 @@ def main():
             
             h_img = cv2.imread(image_path)
         
-        thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
+        thread1 = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
         thread1.start()
         thread1.join()
     
