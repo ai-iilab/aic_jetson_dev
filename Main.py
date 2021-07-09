@@ -221,9 +221,9 @@ def main():
             serial_number = int(sys.argv[1])
         camera_wrapper = CameraZED(serial_number, INPUT_WIDTH, INPUT_HEIGHT, INPUT_FPS)
     
-    pre_process_wrapper = PreProcessor((1080, 1920, 3), (608, 608, 3), ENABLE_TIME_PROFILE)
-    inference_trt_wrapper = InferenceTRT("yolov5s.engine", ENABLE_TIME_PROFILE)
-    post_process_wrapper = PostProcessor((1080, 1920, 3), (608, 608, 3), CONF_THRESH, IOU_THRESHOLD, ENABLE_TIME_PROFILE)
+    pre_process_wrapper = PreProcessor((BATCH_SIZE, INPUT_HEIGHT, INPUT_WIDTH, 3), (BATCH_SIZE, INFER_HEIGHT, INFER_WIDTH, 3), ENABLE_TIME_PROFILE)
+    inference_trt_wrapper = InferenceTRT(ENGINE_PATH, BATCH_SIZE, ENABLE_TIME_PROFILE)
+    post_process_wrapper = PostProcessor((BATCH_SIZE, INPUT_HEIGHT, INPUT_WIDTH, 3), (BATCH_SIZE, INFER_HEIGHT, INFER_WIDTH, 3), CONF_THRESH, IOU_THRESHOLD, ENABLE_TIME_PROFILE)
     
     if ENABLE_DUMMY_INPUT == True:
         for index in range(0, 10):
