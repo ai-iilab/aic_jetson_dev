@@ -240,14 +240,18 @@ def main():
     
     start_frame = 0
     end_frame = 1000
+    total_frame = 0
+    
     for index in range(start_frame, end_frame):
         if ENABLE_CAMERA_LIVE is True:
             h_img = camera_wrapper.capture_left()
+            total_frame += 1
         else:
             image_path = "image/0000_V0000_%03d.jpg" % index
             print(image_path)
             
             h_img = cv2.imread(image_path)
+            total_frame += 1
         
         thread1 = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
         thread1.start()
@@ -255,11 +259,12 @@ def main():
     
     thread1.save_json()
 
-    if ENABLE_TIME_PROFILE == True:
+    if ENABLE_TIME_PROFILE is True:
         print("\n")
-        print("Pre-process time  : ", pre_process_wrapper.proc_time / (end_frame - start_frame), " msec")
-        print("Inference time    : ", inference_trt_wrapper.proc_time / (end_frame - start_frame), " msec")
-        print("Post-process time : ", post_process_wrapper.proc_time / (end_frame - start_frame), " msec", "\n")
+        print("Total frame            : ", total_frame)
+        print("Avg. Pre-process time  : ", pre_process_total_time / total_frame, " msec")
+        print("Avg. Inference time    : ", inference_total_time / total_frame, " msec")
+        print("Avg. Post-process time : ", post_process_total_time / total_frame, " msec", "\n")
     
     pre_process_wrapper.destroy()
     inference_trt_wrapper.destroy()
