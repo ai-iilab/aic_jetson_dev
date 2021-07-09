@@ -45,7 +45,7 @@ class InferenceTRT(object):
             exit(1)
 
         for binding in engine:
-            size = trt.volume(engine.get_binding_shape(binding)) * engine.max_batch_size
+            size = trt.volume(engine.get_binding_shape(binding)) * max_batch_size
             dtype = trt.nptype(engine.get_binding_dtype(binding))
             
             gpu_array = gpuarray.empty(size, dtype)
@@ -66,6 +66,7 @@ class InferenceTRT(object):
         self.cuda_outputs = cuda_outputs
         self.host_outputs = host_outputs
         self.bindings = bindings
+        self.max_batch_size = max_batch_size
         
         self.proc_time = 0
         self.enable_profiling = enable_profiling
