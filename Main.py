@@ -303,6 +303,13 @@ def main():
         print("Avg. Inference time    : ", inference_total_time / total_frame, " msec")
         print("Avg. Post-process time : ", post_process_total_time / total_frame, " msec", "\n")
     
+    # Sum inference time
+    if ENABLE_WRITE_JSON is True:
+        annots['preproc_time'] = annots['preproc_time'] + pre_process_total_time / total_frame
+        annots['inference_time'] = annots['inference_time'] + inference_total_time / total_frame
+        annots['postproc_time'] = annots['postproc_time'] + post_process_total_time / total_frame
+        save_ap_json(annots)
+    
     if ENABLE_CAMERA_LIVE is True:
         camera_wrapper.destroy()
     
