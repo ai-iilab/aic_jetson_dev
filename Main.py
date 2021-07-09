@@ -241,13 +241,19 @@ def main():
             trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, annots, "", False, False)
             trt_thread.start()
             trt_thread.join()
-        
-        pre_process_wrapper.proc_time = 0
-        inference_trt_wrapper.proc_time = 0
-        post_process_wrapper.proc_time = 0
+    
+    pre_process_wrapper.proc_time = 0
+    inference_trt_wrapper.proc_time = 0
+    post_process_wrapper.proc_time = 0
+    
+    pre_process_total_time = 0
+    inference_total_time = 0
+    post_process_total_time = 0
     
     start_frame = 0
-    end_frame = 1000
+    end_frame = 4950
+    if ENABLE_CAMERA_LIVE is True:
+        end_frame = CAMERA_TOTAL_FRAME
     total_frame = 0
     
     for index in range(start_frame, end_frame):
