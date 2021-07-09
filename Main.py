@@ -199,6 +199,18 @@ class ThreadTRT(threading.Thread):
             cv2.imwrite(save_name, self.input_img)
             self.add_img_annot(save_name, result_boxes, result_scores, time)
 
+    def draw_box(self, result_boxes, result_scores, result_classid):
+        for i in range(len(result_boxes)):
+            box = result_boxes[i]
+            plot_one_box(
+                box,
+                self.input_img[0],
+                class_id = int(result_classid[i]),
+                label="{}:{:.2f}".format(
+                categories[int(result_classid[i])], result_scores[i]
+                ),
+            )    
+    
     def add_img_annot(self, file_name, boxes, scores, time):
         # Sum inference time
         self.annots['inference_time'] = self.annots['inference_time'] + time
