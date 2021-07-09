@@ -10,7 +10,7 @@ For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
 import time
-import numpy
+import numpy as np
 import pycuda.autoinit
 import pycuda.driver as cuda
 import torch
@@ -57,7 +57,7 @@ class PostProcessor(object):
             y:          A boxes tensor, each row is a box [x1, y1, x2, y2]
         """
         
-        y = torch.zeros_like(x) if isinstance(x, torch.Tensor) else numpy.zeros_like(x)
+        y = torch.zeros_like(x) if isinstance(x, torch.Tensor) else np.zeros_like(x)
         r_w = infer_w / origin_w
         r_h = infer_h / origin_h
         if r_h > r_w:
@@ -90,7 +90,7 @@ class PostProcessor(object):
             start = time.time()
         
         num = int(output[0])
-        pred = numpy.reshape(output[1:], (-1, 6))[:num, :]
+        pred = np.reshape(output[1:], (-1, 6))[:num, :]
         pred = torch.Tensor(pred).cuda()
         boxes = pred[:, :4]
         scores = pred[:, 4]
