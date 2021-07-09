@@ -26,8 +26,8 @@ class PreProcessor(object):
         
         cfx = cuda.Device(0).make_context()
         
-        input_height, input_width, input_channel = input_shape
-        infer_height, infer_width, infer_channel = infer_shape
+        max_batch_size, input_height, input_width, input_channel = input_shape
+        max_batch_size, infer_height, infer_width, infer_channel = infer_shape
         
         d_img = gpuarray.empty(input_shape, numpy.uint8)
         d_img_temp = gpuarray.empty(infer_shape, numpy.uint8)
