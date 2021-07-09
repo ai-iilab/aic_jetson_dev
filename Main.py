@@ -205,6 +205,10 @@ class myThread(threading.Thread):
         # Dump Json
         with open('./result.json', 'w') as json_file:
             json.dump(self.annots, json_file, indent=2)
+    
+    def join(self):
+        threading.Thread.join(self)
+        return self.input_img, self.annots
 
 def main():
     if ENABLE_CAMERA_LIVE is True:
