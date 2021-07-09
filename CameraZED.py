@@ -43,6 +43,13 @@ class CameraZED(object):
         
         print("Calibration file found. Loading...")
         camera_matrix_left, camera_matrix_right, map_left_x, map_left_y, map_right_x, map_right_y = self.init_calibration(calibration_file)
+        
+        self.camera_matrix_left = camera_matrix_left
+        self.camera_matrix_right = camera_matrix_right
+        self.map_left_x = map_left_x
+        self.map_left_y = map_left_y
+        self.map_right_x = map_right_x
+        self.map_right_y = map_right_y
     
     def destroy(self):
         print("CameraZED destroy")
