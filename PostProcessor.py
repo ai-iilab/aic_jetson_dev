@@ -110,6 +110,15 @@ class PostProcessor(object):
             tensor = np.reshape(output, (max_batch_size, int(output.size / max_batch_size)))
             pred_arr = None
             
+            for index in range(0, batch_size):
+                num = int(tensor[index][0])
+                pred = np.reshape(tensor[index][1:], (-1, 6))[:num, :]
+                
+                if index == 0:
+                    pred_arr = pred
+                else:
+                    pred_arr = np.concatenate((pred_arr, pred), axis=0)
+            
             
         else:
             num = int(output[0])
