@@ -201,12 +201,12 @@ class ThreadTRT(threading.Thread):
                 ),
             )    
     
-    def add_img_annot(self, file_name, boxes, scores, time):
+    def add_img_annot(self, file_name, boxes, scores):
         # Store annotation per image
         annotation = {'file_name': file_name, 'objects': []}
         for b, p in zip(boxes.tolist(), scores.tolist()):
             tmp = {'position': b, 'confidence_score': float(p)}
-        annotation['objects'].append(tmp)
+            annotation['objects'].append(tmp)
         self.annots['annotations'].append(annotation)
     
     def join(self):
