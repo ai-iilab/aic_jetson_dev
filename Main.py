@@ -37,6 +37,13 @@ INFER_HEIGHT = 640
 CONF_THRESH = 0.1
 IOU_THRESHOLD = 0.4
 
+BATCH_SIZE = 1
+if BATCH_SIZE > 1:
+    ENABLE_DRAW_FPS = False
+    ENABLE_CAMERA_LIVE = False
+    ENABLE_WRITE_JSON = False
+    ENABLE_SHOW_OUTPUT = False
+
 def plot_one_box(x, img, color=None, label=None, line_thickness=None):
     """
     description: Plots one bounding box on image img,
