@@ -55,3 +55,21 @@ class CameraZED(object):
         print("CameraZED destroy")
         
         self.cap.release()
+    
+    def download_calibration_file(self, serial_number) :
+        if os.name == 'nt' :
+            #hidden_path = os.getenv('APPDATA') + '\\Stereolabs\\settings\\'
+            hidden_path = 'C:\\ProgramData' + '\\Stereolabs\\settings\\'
+        else :
+            hidden_path = '/usr/local/zed/settings/'
+        calibration_file = hidden_path + 'SN' + str(serial_number) + '.conf'
+        
+        if os.path.isfile(calibration_file) == False:
+            url = 'http://calib.stereolabs.com/?SN='
+            filename = wget.download(url=url+str(serial_number), out=calibration_file)
+        
+            if os.path.isfile(calibration_file) == False:
+                print('Invalid Calibration File')
+                return ""
+        
+        return calibration_file
