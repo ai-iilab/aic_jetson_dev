@@ -185,9 +185,11 @@ def main():
     
     if ENABLE_DUMMY_INPUT == True:
         for index in range(0, 10):
-            image_path = "image/0000_V0000_000.jpg"
-            
-            h_img = cv2.imread(image_path)
+            if ENABLE_CAMERA_LIVE is True:
+                h_img = camera_wrapper.capture_left()
+            else:
+                image_path = "image/0000_V0000_000.jpg"
+                h_img = cv2.imread(image_path)
             
             thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, False)
             thread1.start()
@@ -200,10 +202,13 @@ def main():
     start_frame = 0
     end_frame = 1000
     for index in range(start_frame, end_frame):
-        image_path = "image/0000_V0000_%03d.jpg" % index
-        print(image_path)
-        
-        h_img = cv2.imread(image_path)
+        if ENABLE_CAMERA_LIVE is True:
+            h_img = camera_wrapper.capture_left()
+        else:
+            image_path = "image/0000_V0000_%03d.jpg" % index
+            print(image_path)
+            
+            h_img = cv2.imread(image_path)
         
         thread1 = myThread(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
         thread1.start()
