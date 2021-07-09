@@ -173,3 +173,6 @@ class CameraZED(object):
         return right_rect
         
     def capture_stereo(self):
+        retval, frame = self.cap.read()
+        left_right_image = np.split(frame, 2, axis=1)
+        return left_right_image
