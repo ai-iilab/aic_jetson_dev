@@ -93,15 +93,18 @@ class PostProcessor(object):
         
         num = int(output[0])
         pred = np.reshape(output[1:], (-1, 6))[:num, :]
-        pred = torch.Tensor(pred).cuda()
+        scores = pred[:, 4]
+        si = scores > self.conf_threshold
+        pred = pred[si, :]
+        
+        pred = torch.Tensor(pred).cpu()
         boxes = pred[:, :4]
         scores = pred[:, 4]
         classid = pred[:, 5]
         
-        si = scores > self.conf_threshold
-        boxes = boxes[si, :]
-        scores = scores[si]
-        classid = classid[si]
+        #boxes = boxes[si, :]
+        #scores = scores[si]
+        #classid = classid[si]
         
         boxes = self.xywh2xyxy(self.infer_height, self.infer_width, self.input_height, self.input_width, boxes)
         
