@@ -126,6 +126,10 @@ class PostProcessor(object):
                 else:
                     pred_arr = np.concatenate((pred_arr, pred), axis=0)
             
+            pred_arr = torch.Tensor(pred_arr).cpu()
+            boxes_arr = pred_arr[:, :4]
+            scores_arr = pred_arr[:, 4]
+            classid_arr = pred_arr[:, 5]
             
         else:
             num = int(output[0])
