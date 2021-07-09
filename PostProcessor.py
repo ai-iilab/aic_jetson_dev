@@ -118,6 +118,9 @@ class PostProcessor(object):
                 si = scores > self.conf_threshold
                 pred = pred[si, :]
                 
+                pred[:, 0] += float(infer_width * 2 * index)
+                pred[:, 1] += float(infer_height * 2 * index)
+                
                 if index == 0:
                     pred_arr = pred
                 else:
