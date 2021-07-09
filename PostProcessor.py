@@ -131,6 +131,12 @@ class PostProcessor(object):
             scores_arr = pred_arr[:, 4]
             classid_arr = pred_arr[:, 5]
             
+            boxes_arr = self.xywh2xyxy(self.infer_height, self.infer_width, self.input_height, self.input_width, boxes_arr)
+            
+            indices = torchvision.ops.nms(boxes_arr, scores_arr, iou_threshold=self.iou_threshold).cpu()
+            result_boxes = boxes_arr[indices, :].cpu()
+            result_scores = scores_arr[indices].cpu()
+            result_classid = classid_arr[indices].cpu()
         else:
             num = int(output[0])
             pred = np.reshape(output[1:], (-1, 6))[:num, :]
