@@ -230,7 +230,7 @@ def main():
             if ENABLE_CAMERA_LIVE is True:
                 h_img = camera_wrapper.capture_left()
             else:
-                image_path = "image/0000_V0000_000.jpg"
+                image_path = "image/test/%04d.jpg" % index
                 h_img = cv2.imread(image_path)
             
             thread1 = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, False)
@@ -250,7 +250,7 @@ def main():
             h_img = camera_wrapper.capture_left()
             total_frame += 1
         else:
-            image_path = "image/0000_V0000_%03d.jpg" % index
+            image_path = "image/test/%04d.jpg" % index
             print(image_path)
             
             h_img = cv2.imread(image_path)
