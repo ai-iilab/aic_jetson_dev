@@ -114,6 +114,10 @@ class PostProcessor(object):
                 num = int(tensor[index][0])
                 pred = np.reshape(tensor[index][1:], (-1, 6))[:num, :]
                 
+                scores = pred[:, 4]
+                si = scores > self.conf_threshold
+                pred = pred[si, :]
+                
                 if index == 0:
                     pred_arr = pred
                 else:
