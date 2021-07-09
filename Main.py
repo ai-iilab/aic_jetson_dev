@@ -182,22 +182,12 @@ class ThreadTRT(threading.Thread):
         self.pre_proc.preprocess_image(self.input_img, self.infer_proc.get_infer_ptr())
         infer_result = self.infer_proc.inference()
         result_boxes, result_scores, result_classid = self.post_proc.post_process(infer_result)
-        time = self.post_proc.post_process.proc_time
 
-        if self.enable_write_output == True:
-            for i in range(len(result_boxes)):
-                box = result_boxes[i]
-                plot_one_box(
-                    box,
-                    self.input_img,
-                    label="{}:{:.2f}".format(
-                        categories[int(result_classid[i])], result_scores[i]
-                    ),
-                )
-            
-            save_name = "output/0000_V0000_%03d.jpg" % index
-            cv2.imwrite(save_name, self.input_img)
-            self.add_img_annot(save_name, result_boxes, result_scores, time)
+        if self.enable_draw_box is True:
+            self.draw_box(result_boxes, result_scores, result_classid)
+        
+        if self.enable_write_json is True:                
+            self.add_img_annot(self.save_name, result_boxes, result_scores)
 
     def draw_box(self, result_boxes, result_scores, result_classid):
         for i in range(len(result_boxes)):
