@@ -34,7 +34,12 @@ class PreProcessor(object):
         d_img_resize = gpuarray.empty(infer_shape, numpy.uint8)
         
         pre_process_lib = ctypes.cdll.LoadLibrary("CUDA_PreProcessor.so")
-        pre_process_lib.ImagePreProcessing.argtypes = (ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_ubyte), ctypes.POINTER(ctypes.c_float), ctypes.c_int)
+        pre_process_lib.ImagePreProcessing.argtypes = (ctypes.c_uint, ctypes.c_uint,
+            ctypes.c_uint, ctypes.c_uint, ctypes.c_uint,
+            ctypes.POINTER(ctypes.c_ubyte),
+            ctypes.POINTER(ctypes.c_ubyte),
+            ctypes.POINTER(ctypes.c_ubyte),
+            ctypes.POINTER(ctypes.c_float), ctypes.c_int)
         
         self.cfx = cfx
         
@@ -45,6 +50,8 @@ class PreProcessor(object):
         self.infer_width = infer_width
         self.infer_height = infer_height
         self.infer_channel = infer_channel
+        
+        self.max_batch_size = max_batch_size
         
         self.d_img = d_img
         self.d_img_temp = d_img_temp
