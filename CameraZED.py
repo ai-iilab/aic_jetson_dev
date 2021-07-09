@@ -159,3 +159,9 @@ class CameraZED(object):
         cameraMatrix_right = P2
         
         return cameraMatrix_left, cameraMatrix_right, map_left_x, map_left_y, map_right_x, map_right_y
+    
+    def capture_left(self):
+        
+    def capture_right(self):
+        
+    def capture_stereo(self):
