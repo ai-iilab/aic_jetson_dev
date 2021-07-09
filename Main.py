@@ -252,9 +252,11 @@ def main():
     
     for index in range(start_frame, end_frame):
         if ENABLE_CAMERA_LIVE is True:
+            save_name = ""
             h_img = camera_wrapper.capture_left()
             total_frame += 1
         else:
+            save_name = "%04d.jpg" % index
             image_path = "image/test/%04d.jpg" % index
             print(image_path)
             
@@ -264,7 +266,7 @@ def main():
             
             total_frame += 1
         
-        trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, annots, "", ENABLE_DRAW_BOX, ENABLE_WRITE_JSON)
+        trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, annots, save_name, ENABLE_DRAW_BOX, ENABLE_WRITE_JSON)
         trt_thread.start()
         out_img, annots = trt_thread.join()
         
