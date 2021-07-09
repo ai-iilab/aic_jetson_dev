@@ -99,10 +99,13 @@ class PostProcessor(object):
         
         max_batch_size = self.max_batch_size
         
+        conf_threshold = self.conf_threshold
+        iou_threshold = self.iou_threshold
+        
         num = int(output[0])
         pred = np.reshape(output[1:], (-1, 6))[:num, :]
         scores = pred[:, 4]
-        si = scores > self.conf_threshold
+        si = scores > conf_threshold
         pred = pred[si, :]
         
         pred = torch.Tensor(pred).cpu()
@@ -116,7 +119,7 @@ class PostProcessor(object):
         
         boxes = self.xywh2xyxy(infer_height, infer_width, input_height, input_width, boxes)
         
-        indices = torchvision.ops.nms(boxes, scores, iou_threshold=self.iou_threshold).cpu()
+        indices = torchvision.ops.nms(boxes, scores, iou_threshold=iou_threshold).cpu()
         result_boxes = boxes[indices, :].cpu()
         result_scores = scores[indices].cpu()
         result_classid = classid[indices].cpu()
