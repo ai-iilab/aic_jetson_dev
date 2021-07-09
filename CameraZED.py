@@ -28,6 +28,14 @@ class CameraZED(object):
         self.width = image_width
         self.height = image_height
         self.fps = fps
+        
+        self.cap = cv2.VideoCapture(0)
+        if self.cap.isOpened() == 0:
+            exit(-1)
+        
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.width * 2)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
+        self.cap.set(cv2.CAP_PROP_FPS, self.fps)
     
     def destroy(self):
         print("CameraZED destroy")
