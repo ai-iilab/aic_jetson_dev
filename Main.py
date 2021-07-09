@@ -255,7 +255,11 @@ def main():
         
         thread1 = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
         thread1.start()
-        thread1.join()
+        out_img, annots = thread1.join()
+        
+        if ENABLE_SHOW_OUTPUT is True:
+            cv2.imshow("result", out_img)
+            cv2.waitKey(1)
 
     if ENABLE_TIME_PROFILE is True:
         print("\n")
