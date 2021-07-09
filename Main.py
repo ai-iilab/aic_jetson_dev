@@ -228,7 +228,7 @@ def main():
     post_process_wrapper = PostProcessor((BATCH_SIZE, INPUT_HEIGHT, INPUT_WIDTH, 3), (BATCH_SIZE, INFER_HEIGHT, INFER_WIDTH, 3), CONF_THRESH, IOU_THRESHOLD, ENABLE_TIME_PROFILE)
     
     if ENABLE_DUMMY_INPUT == True:
-        for index in range(0, 10):
+        for index in range(0, 32):
             if ENABLE_CAMERA_LIVE is True:
                 h_img = camera_wrapper.capture_left()
             else:
