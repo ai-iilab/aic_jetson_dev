@@ -13,6 +13,7 @@ import random
 import threading
 import cv2
 
+from CameraZED import CameraZED
 from PreProcessor import PreProcessor
 from InferenceTRT import InferenceTRT
 from PostProcessor import PostProcessor
