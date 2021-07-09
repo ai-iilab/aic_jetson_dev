@@ -264,6 +264,14 @@ def main():
         if ENABLE_SHOW_OUTPUT is True:
             cv2.imshow("result", out_img)
             cv2.waitKey(1)
+        
+        pre_process_total_time += pre_process_wrapper.proc_time
+        inference_total_time += inference_trt_wrapper.proc_time
+        post_process_total_time += post_process_wrapper.proc_time
+
+        pre_process_wrapper.proc_time = 0
+        inference_trt_wrapper.proc_time = 0
+        post_process_wrapper.proc_time = 0
 
     if ENABLE_TIME_PROFILE is True:
         print("\n")
