@@ -76,7 +76,7 @@ class InferenceTRT(object):
         
         self.cfx.pop()
         
-    def inference(self):
+    def inference(self, batch_size):
         """
         description: Execute inference and return inference result
         param:
@@ -94,7 +94,7 @@ class InferenceTRT(object):
         bindings = self.bindings
         
         self.cfx.push()
-        context.execute(bindings=bindings)
+        context.execute(batch_size=batch_size, bindings=bindings)
         cuda.memcpy_dtoh(host_outputs[0], cuda_outputs[0])
         self.cfx.pop()
         
