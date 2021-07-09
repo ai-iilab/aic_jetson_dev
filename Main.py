@@ -19,8 +19,14 @@ from InferenceTRT import InferenceTRT
 from PostProcessor import PostProcessor
 
 ENABLE_DUMMY_INPUT = True
+ENABLE_DRAW_BOX = True
+ENABLE_DRAW_FPS = False
+ENABLE_TIME_PROFILE = True
+ENABLE_CAMERA_LIVE = False
+ENABLE_WRITE_JSON = False
+ENABLE_SHOW_OUTPUT = False
 ENABLE_WRITE_OUTPUT = True
-ENABLE_TIME_PROFILE = False
+
 CONF_THRESH = 0.1
 IOU_THRESHOLD = 0.4
 
