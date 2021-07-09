@@ -159,10 +159,10 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=None):
             lineType=cv2.LINE_AA,
         )
 
-def save_json(self):
+def save_ap_json(annots):
     # Dump Json
-    with open('./result.json', 'w') as json_file:
-        json.dump(self.annots, json_file, indent=2)
+    with open(JSON_PATH, 'w') as json_file:
+        json.dump(annots, json_file, indent=2)
 
 class ThreadTRT(threading.Thread):
     def __init__(self, pre_proc, infer_proc, post_proc, input_img, batch_size, annots, save_name, enable_draw_box, enable_write_json):
@@ -202,9 +202,6 @@ class ThreadTRT(threading.Thread):
             )    
     
     def add_img_annot(self, file_name, boxes, scores, time):
-        # Sum inference time
-        self.annots['inference_time'] = self.annots['inference_time'] + time
-
         # Store annotation per image
         annotation = {'file_name': file_name, 'objects': []}
         for b, p in zip(boxes.tolist(), scores.tolist()):
