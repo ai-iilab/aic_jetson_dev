@@ -21,8 +21,13 @@ class CameraZED(object):
     description: A CameraZED class that warps image capture ops.
     """
     
-    def __init__(self):
+    def __init__(self, serial_number, image_width, image_height, fps):
         print("CameraZED init")
+        
+        self.serial_number = serial_number
+        self.width = image_width
+        self.height = image_height
+        self.fps = fps
     
     def destroy(self):
         print("CameraZED destroy")
