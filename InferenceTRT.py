@@ -39,6 +39,10 @@ class InferenceTRT(object):
         cuda_outputs = []
         host_outputs = []
         bindings = []
+        
+        if max_batch_size > engine.max_batch_size:
+            print("the batch size must be smaller than max_batch_size! (max: ", engine.max_batch_size, ")")
+            exit(1)
 
         for binding in engine:
             size = trt.volume(engine.get_binding_shape(binding)) * engine.max_batch_size
