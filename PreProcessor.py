@@ -67,7 +67,7 @@ class PreProcessor(object):
         
         self.cfx.pop()
         
-    def preprocess_image(self, input_image, infer_ptr):
+    def preprocess_image(self, input_image, infer_ptr, batch_size):
         """
         description: Get an image data from argument, copy it to GPU memory
                      convert it to RGB, resize and pad it to target size, normalize to [0,1],
@@ -84,9 +84,11 @@ class PreProcessor(object):
         
         input_width = self.input_width
         input_height = self.input_height
+        input_channel = self.input_channel
         
         infer_width = self.infer_width
         infer_height = self.infer_height
+        infer_channel = self.infer_channel
         
         d_img = self.d_img
         d_img_temp = self.d_img_temp
