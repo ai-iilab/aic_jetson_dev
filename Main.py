@@ -257,6 +257,10 @@ def main():
         thread1.start()
         out_img, annots = thread1.join()
         
+        if ENABLE_DRAW_FPS is True:
+            fps = 1000 / (pre_process_wrapper.proc_time + inference_trt_wrapper.proc_time + post_process_wrapper.proc_time)
+            draw_fps(out_img, fps)
+        
         if ENABLE_SHOW_OUTPUT is True:
             cv2.imshow("result", out_img)
             cv2.waitKey(1)
