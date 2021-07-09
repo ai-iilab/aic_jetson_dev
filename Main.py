@@ -159,6 +159,11 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=None):
             lineType=cv2.LINE_AA,
         )
 
+def save_json(self):
+    # Dump Json
+    with open('./result.json', 'w') as json_file:
+        json.dump(self.annots, json_file, indent=2)
+
 class ThreadTRT(threading.Thread):
     def __init__(self, pre_proc, infer_proc, post_proc, input_img, enable_write_output):
         threading.Thread.__init__(self)
@@ -200,11 +205,6 @@ class ThreadTRT(threading.Thread):
             tmp = {'position': b, 'confidence_score': float(p)}
         annotation['objects'].append(tmp)
         self.annots['annotations'].append(annotation)
-
-    def save_json(self):
-        # Dump Json
-        with open('./result.json', 'w') as json_file:
-            json.dump(self.annots, json_file, indent=2)
     
     def join(self):
         threading.Thread.join(self)
@@ -256,8 +256,6 @@ def main():
         thread1 = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
         thread1.start()
         thread1.join()
-    
-    thread1.save_json()
 
     if ENABLE_TIME_PROFILE is True:
         print("\n")
