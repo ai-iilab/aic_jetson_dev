@@ -171,8 +171,7 @@ class myThread(threading.Thread):
         with open('./result.json', 'w') as json_file:
             json.dump(self.annots, json_file, indent=2)
 
-
-if __name__ == "__main__":
+def main():
     pre_process_wrapper = PreProcessor((1080, 1920, 3), (608, 608, 3), ENABLE_TIME_PROFILE)
     inference_trt_wrapper = InferenceTRT("yolov5s.engine", ENABLE_TIME_PROFILE)
     post_process_wrapper = PostProcessor((1080, 1920, 3), (608, 608, 3), CONF_THRESH, IOU_THRESHOLD, ENABLE_TIME_PROFILE)
@@ -214,3 +213,6 @@ if __name__ == "__main__":
     pre_process_wrapper.destroy()
     inference_trt_wrapper.destroy()
     post_process_wrapper.destroy()
+
+if __name__ == "__main__":
+    main()
