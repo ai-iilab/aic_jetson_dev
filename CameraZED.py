@@ -167,5 +167,9 @@ class CameraZED(object):
         return left_rect
         
     def capture_right(self):
+        retval, frame = self.cap.read()
+        left_right_image = np.split(frame, 2, axis=1)
+        right_rect = cv2.remap(left_right_image[1], self.map_right_x, self.map_right_y, interpolation=cv2.INTER_LINEAR)
+        return right_rect
         
     def capture_stereo(self):
