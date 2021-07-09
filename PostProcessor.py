@@ -77,7 +77,7 @@ class PostProcessor(object):
 
         return y
     
-    def post_process(self, output):
+    def post_process(self, output, batch_size):
         """
         description: postprocess the prediction
         param:
