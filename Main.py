@@ -44,6 +44,8 @@ if BATCH_SIZE > 1:
     ENABLE_WRITE_JSON = False
     ENABLE_SHOW_OUTPUT = False
 
+CAMERA_TOTAL_FRAME = 1000
+
 def plot_one_box(x, img, color=None, label=None, line_thickness=None):
     """
     description: Plots one bounding box on image img,
