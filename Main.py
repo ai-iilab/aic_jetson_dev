@@ -221,6 +221,8 @@ def main():
             serial_number = int(sys.argv[1])
         camera_wrapper = CameraZED(serial_number, INPUT_WIDTH, INPUT_HEIGHT, INPUT_FPS)
     
+    annots = {'param_num': 1000, 'preproc_time': 0, 'inference_time': 0, 'postproc_time': 0, 'annotations': []}
+    
     pre_process_wrapper = PreProcessor((BATCH_SIZE, INPUT_HEIGHT, INPUT_WIDTH, 3), (BATCH_SIZE, INFER_HEIGHT, INFER_WIDTH, 3), ENABLE_TIME_PROFILE)
     inference_trt_wrapper = InferenceTRT(ENGINE_PATH, BATCH_SIZE, ENABLE_TIME_PROFILE)
     post_process_wrapper = PostProcessor((BATCH_SIZE, INPUT_HEIGHT, INPUT_WIDTH, 3), (BATCH_SIZE, INFER_HEIGHT, INFER_WIDTH, 3), CONF_THRESH, IOU_THRESHOLD, ENABLE_TIME_PROFILE)
@@ -236,7 +238,7 @@ def main():
                 if h_img is None:
                     continue
             
-            trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, False)
+            trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, annots, "", False, False)
             trt_thread.start()
             trt_thread.join()
         
@@ -262,7 +264,7 @@ def main():
             
             total_frame += 1
         
-        trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, ENABLE_WRITE_OUTPUT)
+        trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, annots, "", ENABLE_DRAW_BOX, ENABLE_WRITE_JSON)
         trt_thread.start()
         out_img, annots = trt_thread.join()
         
