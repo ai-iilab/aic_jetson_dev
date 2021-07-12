@@ -117,20 +117,30 @@ def main():
         capture_img_resize = cv2.resize(capture_img, (INFER_WIDTH, INFER_HEIGHT))
         data = preprocess(capture_img_resize)
         end = time.time()
+        
         pre_process_time += (end - start) * 1000
+        fps += (end - start) * 1000
         
         start = time.time()
         cmap, paf = model_trt(data)
         cmap, paf = cmap.detach().cpu(), paf.detach().cpu()
         end = time.time()
+        
         inference_time += (end - start) * 1000
+        fps += (end - start) * 1000
         
         start = time.time()
         counts, objects, peaks = parse_objects(cmap, paf)  # , cmap_threshold=0.15, link_threshold=0.15)
         end = time.time()
+        
         post_process_time += (end - start) * 1000
+        fps += (end - start) * 1000
         
         draw_objects(capture_img, counts, objects, peaks)
+        
+        if ENABLE_DRAW_FPS is True:
+            draw_fps(capture_img, 1000 / fps)
+            fps = 0
         
         cv2.imshow("result", capture_img)
         if cv2.waitKey(1) >= 0:
