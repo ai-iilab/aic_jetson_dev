@@ -74,6 +74,9 @@ def main():
         model_trt = torch2trt.TRTModule()
         model_trt.load_state_dict(torch.load(OPTIMIZED_MODEL))
     else:
+        model = trt_pose.models.resnet18_baseline_att(num_parts, 2 * num_links).cuda().eval()
+        MODEL_WEIGHTS = ORIG_MODEL_PATH
+        model.load_state_dict(torch.load(MODEL_WEIGHTS))
 
 if __name__ == "__main__":
     main()
