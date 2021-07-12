@@ -318,9 +318,13 @@ def main():
                 if batch_idx < BATCH_SIZE and index + 1 != 32:
                     continue
             
-            trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, annots, "", False, False)
+            batch_img = np.array(batch_img_arr)
+            trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, batch_img, batch_idx, annots, "", False, False)
             trt_thread.start()
             trt_thread.join()
+            
+            batch_idx = 0
+            batch_img_arr.clear()
     
     pre_process_wrapper.proc_time = 0
     inference_trt_wrapper.proc_time = 0
