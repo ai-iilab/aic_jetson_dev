@@ -340,11 +340,15 @@ def main():
         end_frame = CAMERA_TOTAL_FRAME
     total_frame = 0
     
+    batch_idx = 0
+    batch_img_arr.clear()
+    
     for index in range(start_frame, end_frame):
         if ENABLE_CAMERA_LIVE is True:
             save_name = ""
             h_img = camera_wrapper.capture_left()
             total_frame += 1
+            batch_idx = 1
         else:
             save_name = "%04d.jpg" % index
             image_path = "image/test/%04d.jpg" % index
@@ -353,6 +357,9 @@ def main():
             h_img = cv2.imread(image_path)
             if h_img is None:
                 continue
+            
+            batch_idx += 1
+            batch_img_arr.append(h_img)
             
             total_frame += 1
         
