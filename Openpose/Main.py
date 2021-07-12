@@ -20,6 +20,8 @@ from trt_pose.parse_objects import ParseObjects
 
 import torch
 import torch2trt
+import torchvision.transforms as transforms
+import PIL.Image
 
 from CameraZED import CameraZED
 
