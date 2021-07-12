@@ -121,6 +121,8 @@ def main():
         
         counts, objects, peaks = parse_objects(cmap, paf)  # , cmap_threshold=0.15, link_threshold=0.15)
         
+        draw_objects(capture_img, counts, objects, peaks)
+        
         cv2.imshow("result", capture_img)
         if cv2.waitKey(1) >= 0:
             break
