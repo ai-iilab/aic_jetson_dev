@@ -86,6 +86,9 @@ def main():
         
         OPTIMIZED_MODEL = TRT_MODEL_PATH
         torch.save(model_trt.state_dict(), OPTIMIZED_MODEL)
+    
+    parse_objects = ParseObjects(topology)
+    draw_objects = DrawObjects(topology)
 
 if __name__ == "__main__":
     main()
