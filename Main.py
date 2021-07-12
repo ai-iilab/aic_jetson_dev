@@ -162,6 +162,41 @@ def plot_one_box(x, img, class_id=None, label=None, line_thickness=None):
         )
 
 def plot_one_box_batch(x, img_arr, class_id=None, label=None, line_thickness=None):
+    x1 = int(x[0]) % INPUT_WIDTH
+    y1 = int(x[1]) % INPUT_WIDTH
+    x2 = int(x[2]) % INPUT_WIDTH
+    y2 = int(x[3]) % INPUT_WIDTH
+    img_idx_1 = int(x[0]) / (INPUT_WIDTH * 2)
+    img_idx_2 = int(x[1]) / (INPUT_WIDTH * 2)
+
+    if img_idx_1 > img_idx_2:
+        img_idx = int(img_idx_1)
+    else:
+        img_idx = int(img_idx_2)
+
+    if x2 < x1:
+        if INPUT_WIDTH - abs(x1) < abs(x2):
+            x1 -= INPUT_WIDTH
+        else:
+            x2 += INPUT_WIDTH
+    if y2 < y1:
+        if INPUT_WIDTH - abs(y1) < abs(y2):
+            y1 -= INPUT_WIDTH
+        else:
+            y2 += INPUT_WIDTH
+
+    img = img_arr[img_idx]
+
+    c1, c2 = (x1, y1), (x2, y2)
+    if c2[0] < c1[0]:
+        c2 = list(c2)
+        c2[0] += INPUT_WIDTH
+        c2 = tuple(c2)
+    if c2[1] < c1[1]:
+        c2 = list(c2)
+        c2[1] += INPUT_WIDTH
+        c2 = tuple(c2)
+
     tl = (
             line_thickness or round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1
     )  # line/font thickness
