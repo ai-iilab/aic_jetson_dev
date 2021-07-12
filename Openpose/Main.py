@@ -116,6 +116,9 @@ def main():
         capture_img_resize = cv2.resize(capture_img, (INFER_WIDTH, INFER_HEIGHT))
         data = preprocess(capture_img_resize)
         
+        cmap, paf = model_trt(data)
+        cmap, paf = cmap.detach().cpu(), paf.detach().cpu()
+        
         cv2.imshow("result", capture_img)
         if cv2.waitKey(1) >= 0:
             break
