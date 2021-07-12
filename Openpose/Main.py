@@ -65,6 +65,9 @@ def draw_fps(img, fps):
     )
 
 def preprocess(image):
+    mean = torch.Tensor([0.485, 0.456, 0.406]).cuda()
+    std = torch.Tensor([0.229, 0.224, 0.225]).cuda()
+    device = torch.device('cuda')
 
 def main():
     if len(sys.argv) == 1 :
