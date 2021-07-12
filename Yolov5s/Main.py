@@ -306,7 +306,6 @@ def main():
         for index in range(0, 32):
             if ENABLE_CAMERA_LIVE is True:
                 h_img = camera_wrapper.capture_left()
-                batch_idx = 1
             else:
                 image_path = "image/test/%04d.jpg" % index
                 
@@ -314,11 +313,11 @@ def main():
                 if h_img is None:
                     continue
                 
-                batch_idx += 1
-                batch_img_arr.append(h_img)
-                
-                if batch_idx < BATCH_SIZE and index + 1 != 32:
-                    continue
+            batch_idx += 1
+            batch_img_arr.append(h_img)
+            
+            if batch_idx < BATCH_SIZE and index + 1 != 32:
+                continue
             
             batch_img = np.array(batch_img_arr)
             trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, batch_img, batch_idx, annots, "", False, False)
@@ -351,8 +350,6 @@ def main():
         if ENABLE_CAMERA_LIVE is True:
             save_name = ""
             h_img = camera_wrapper.capture_left()
-            batch_idx = 1
-            total_frame += 1
         else:
             save_name = "%04d.jpg" % index
             image_path = "image/test/%04d.jpg" % index
@@ -362,13 +359,13 @@ def main():
             if h_img is None:
                 continue
             
-            batch_idx += 1
-            batch_img_arr.append(h_img)
-            
-            total_frame += 1
-            
-            if batch_idx < BATCH_SIZE and index + 1 != end_frame:
-                continue
+        batch_idx += 1
+        batch_img_arr.append(h_img)
+        
+        total_frame += 1
+        
+        if batch_idx < BATCH_SIZE and index + 1 != end_frame:
+            continue
             
         batch_img = np.array(batch_img_arr)
         trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, batch_img, batch_idx, annots, save_name, ENABLE_DRAW_BOX, ENABLE_WRITE_JSON)
@@ -380,10 +377,10 @@ def main():
         
         if ENABLE_DRAW_FPS is True:
             fps = 1000 / (pre_process_wrapper.proc_time + inference_trt_wrapper.proc_time + post_process_wrapper.proc_time)
-            draw_fps(out_img, fps)
+            draw_fps(out_img[0], fps)
         
         if ENABLE_SHOW_OUTPUT is True:
-            cv2.imshow("result", out_img)
+            cv2.imshow("result", out_img[0])
             cv2.waitKey(1)
         
         if ENABLE_WRITE_OUTPUT is True:
