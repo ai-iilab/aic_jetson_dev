@@ -68,6 +68,12 @@ def main():
     
     num_parts = len(human_pose['keypoints'])
     num_links = len(human_pose['skeleton'])
+    
+    if os.path.exists(TRT_MODEL_PATH):
+        OPTIMIZED_MODEL = TRT_MODEL_PATH
+        model_trt = torch2trt.TRTModule()
+        model_trt.load_state_dict(torch.load(OPTIMIZED_MODEL))
+    else:
 
 if __name__ == "__main__":
     main()
