@@ -12,6 +12,7 @@ For more information, contact us at <jw.jeong@keti.re.kr>.
 import sys
 import cv2
 import json
+import time
 
 import trt_pose.coco
 import trt_pose.models
