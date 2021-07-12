@@ -113,6 +113,9 @@ def main():
     for index in range(0, TOTAL_FRAME):
         capture_img = camera_wrapper.capture_left()
         
+        capture_img_resize = cv2.resize(capture_img, (INFER_WIDTH, INFER_HEIGHT))
+        data = preprocess(capture_img_resize)
+        
         cv2.imshow("result", capture_img)
         if cv2.waitKey(1) >= 0:
             break
