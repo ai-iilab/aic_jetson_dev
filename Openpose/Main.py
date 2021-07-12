@@ -110,6 +110,11 @@ def main():
     parse_objects = ParseObjects(topology)
     draw_objects = DrawObjects(topology)
     
+    pre_process_time = 0
+    inference_time = 0
+    post_process_time = 0
+    fps = 0
+    
     for index in range(0, TOTAL_FRAME):
         capture_img = camera_wrapper.capture_left()
         
