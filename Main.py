@@ -362,10 +362,17 @@ def main():
             batch_img_arr.append(h_img)
             
             total_frame += 1
-        
-        trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, annots, save_name, ENABLE_DRAW_BOX, ENABLE_WRITE_JSON)
+            
+            if batch_idx < BATCH_SIZE and index + 1 != end_frame:
+                continue
+            
+        batch_img = np.array(batch_img_arr)
+        trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, batch_img, batch_idx, annots, save_name, ENABLE_DRAW_BOX, ENABLE_WRITE_JSON)
         trt_thread.start()
         out_img, annots = trt_thread.join()
+        
+        batch_idx = 0
+        batch_img_arr.clear()
         
         if ENABLE_DRAW_FPS is True:
             fps = 1000 / (pre_process_wrapper.proc_time + inference_trt_wrapper.proc_time + post_process_wrapper.proc_time)
