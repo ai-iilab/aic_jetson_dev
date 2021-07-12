@@ -220,6 +220,7 @@ def plot_one_box_batch(x, img_arr, class_id=None, label=None, line_thickness=Non
             thickness=2,
             lineType=cv2.LINE_AA,
         )
+
 def save_ap_json(annots):
     # Dump Json
     with open(JSON_PATH, 'w') as json_file:
@@ -350,8 +351,8 @@ def main():
         if ENABLE_CAMERA_LIVE is True:
             save_name = ""
             h_img = camera_wrapper.capture_left()
-            total_frame += 1
             batch_idx = 1
+            total_frame += 1
         else:
             save_name = "%04d.jpg" % index
             image_path = "image/test/%04d.jpg" % index
