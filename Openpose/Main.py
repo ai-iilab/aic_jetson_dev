@@ -80,6 +80,9 @@ def main():
         
         data = torch.zeros((1, 3, INFER_HEIGHT, INFER_WIDTH)).cuda()
         model_trt = torch2trt.torch2trt(model, [data], fp16_mode = True, max_workspace_size=1<<25)
+        
+        OPTIMIZED_MODEL = TRT_MODEL_PATH
+        torch.save(model_trt.state_dict(), OPTIMIZED_MODEL)
 
 if __name__ == "__main__":
     main()
