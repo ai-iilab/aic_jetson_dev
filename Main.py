@@ -10,6 +10,7 @@ For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 import json
 import sys
+import numpy as np
 import random
 import threading
 import cv2
