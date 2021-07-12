@@ -15,6 +15,8 @@ import json
 
 import trt_pose.coco
 import trt_pose.models
+import torch
+import torch2trt
 
 from CameraZED import CameraZED
 
