@@ -26,6 +26,9 @@ INFER_HEIGHT = 224
 
 TOTAL_FRAME = 1000
 
+ORIG_MODEL_PATH = "resnet18_baseline_att_224x224_A_epoch_249.pth"
+TRT_MODEL_PATH = "resnet18_baseline_att_224x224_A_epoch_249_trt.pth"
+
 def draw_fps(img, fps):
     tl = (
         round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1
