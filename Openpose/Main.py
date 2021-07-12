@@ -13,6 +13,9 @@ import sys
 import cv2
 import json
 
+import trt_pose.coco
+import trt_pose.models
+
 from CameraZED import CameraZED
 
 ENABLE_DRAW_FPS = True
