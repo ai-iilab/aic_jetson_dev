@@ -135,6 +135,10 @@ def main():
         cv2.imshow("result", capture_img)
         if cv2.waitKey(1) >= 0:
             break
+    
+    print("Avg. pre_process_time : ", pre_process_time / TOTAL_FRAME, " msec")
+    print("Avg. inference_time   : ", inference_time / TOTAL_FRAME, " msec")
+    print("Avg. post_process_time: ", post_process_time / TOTAL_FRAME, " msec")
 
 if __name__ == "__main__":
     main()
