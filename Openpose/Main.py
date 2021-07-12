@@ -9,6 +9,7 @@ The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
 
+import os
 import sys
 import cv2
 import json
