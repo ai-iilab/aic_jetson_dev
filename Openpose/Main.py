@@ -113,13 +113,22 @@ def main():
     for index in range(0, TOTAL_FRAME):
         capture_img = camera_wrapper.capture_left()
         
+        start = time.time()
         capture_img_resize = cv2.resize(capture_img, (INFER_WIDTH, INFER_HEIGHT))
         data = preprocess(capture_img_resize)
+        end = time.time()
+        pre_process_time += (end - start) * 1000
         
+        start = time.time()
         cmap, paf = model_trt(data)
         cmap, paf = cmap.detach().cpu(), paf.detach().cpu()
+        end = time.time()
+        inference_time += (end - start) * 1000
         
+        start = time.time()
         counts, objects, peaks = parse_objects(cmap, paf)  # , cmap_threshold=0.15, link_threshold=0.15)
+        end = time.time()
+        post_process_time += (end - start) * 1000
         
         draw_objects(capture_img, counts, objects, peaks)
         
