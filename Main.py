@@ -340,6 +340,8 @@ def main():
         end_frame = CAMERA_TOTAL_FRAME
     total_frame = 0
     
+    img_offset = start_frame
+    
     batch_idx = 0
     batch_img_arr.clear()
     
@@ -384,6 +386,10 @@ def main():
         
         if ENABLE_WRITE_OUTPUT is True:
             if BATCH_SIZE > 1:
+                for index2 in range(img_offset, index + 1):
+                    save_name = "output/%04d.jpg" % index2
+                    cv2.imwrite(save_name, out_img[index2 - img_offset])
+                img_offset = index + 1
             else:
                 save_name = "output/%04d.jpg" % index
                 cv2.imwrite(save_name, out_img[0])
