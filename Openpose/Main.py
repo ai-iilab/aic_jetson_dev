@@ -119,6 +119,8 @@ def main():
         cmap, paf = model_trt(data)
         cmap, paf = cmap.detach().cpu(), paf.detach().cpu()
         
+        counts, objects, peaks = parse_objects(cmap, paf)  # , cmap_threshold=0.15, link_threshold=0.15)
+        
         cv2.imshow("result", capture_img)
         if cv2.waitKey(1) >= 0:
             break
