@@ -89,6 +89,13 @@ def main():
     
     parse_objects = ParseObjects(topology)
     draw_objects = DrawObjects(topology)
+    
+    for index in range(0, TOTAL_FRAME):
+        capture_img = camera_wrapper.capture_left()
+        
+        cv2.imshow("result", capture_img)
+        if cv2.waitKey(1) >= 0:
+            break
 
 if __name__ == "__main__":
     main()
