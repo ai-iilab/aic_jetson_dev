@@ -77,6 +77,9 @@ def main():
         model = trt_pose.models.resnet18_baseline_att(num_parts, 2 * num_links).cuda().eval()
         MODEL_WEIGHTS = ORIG_MODEL_PATH
         model.load_state_dict(torch.load(MODEL_WEIGHTS))
+        
+        data = torch.zeros((1, 3, INFER_HEIGHT, INFER_WIDTH)).cuda()
+        model_trt = torch2trt.torch2trt(model, [data], fp16_mode = True, max_workspace_size=1<<25)
 
 if __name__ == "__main__":
     main()
