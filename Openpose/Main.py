@@ -15,6 +15,9 @@ import json
 
 import trt_pose.coco
 import trt_pose.models
+from trt_pose.draw_objects import DrawObjects
+from trt_pose.parse_objects import ParseObjects
+
 import torch
 import torch2trt
 
