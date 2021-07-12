@@ -383,8 +383,10 @@ def main():
             cv2.waitKey(1)
         
         if ENABLE_WRITE_OUTPUT is True:
-            save_name = "output/%04d.jpg" % index
-            cv2.imwrite(save_name, out_img)
+            if BATCH_SIZE > 1:
+            else:
+                save_name = "output/%04d.jpg" % index
+                cv2.imwrite(save_name, out_img[0])
         
         pre_process_total_time += pre_process_wrapper.proc_time
         inference_total_time += inference_trt_wrapper.proc_time
