@@ -65,6 +65,9 @@ def main():
     with open ('human_pose.json', 'r') as f:
         human_pose = json.load(f)
     topology = trt_pose.coco.coco_category_to_topology(human_pose)
+    
+    num_parts = len(human_pose['keypoints'])
+    num_links = len(human_pose['skeleton'])
 
 if __name__ == "__main__":
     main()
