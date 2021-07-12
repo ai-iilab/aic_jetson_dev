@@ -14,6 +14,17 @@ import cv2
 
 from CameraZED import CameraZED
 
+ENABLE_DRAW_FPS = True
+
+INPUT_WIDTH = 1920
+INPUT_HEIGHT = 1080
+INPUT_FPS = 30
+
+INFER_WIDTH = 224
+INFER_HEIGHT = 224
+
+TOTAL_FRAME = 1000
+
 def draw_fps(img, fps):
     tl = (
         round(0.002 * (img.shape[0] + img.shape[1]) / 2) + 1
