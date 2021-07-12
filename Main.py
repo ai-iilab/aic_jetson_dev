@@ -248,18 +248,28 @@ class ThreadTRT(threading.Thread):
         
         if self.enable_write_json is True:                
             self.add_img_annot(self.save_name, result_boxes, result_scores)
-
+    
     def draw_box(self, result_boxes, result_scores, result_classid):
         for i in range(len(result_boxes)):
             box = result_boxes[i]
-            plot_one_box(
-                box,
-                self.input_img[0],
-                class_id = int(result_classid[i]),
-                label="{}:{:.2f}".format(
-                categories[int(result_classid[i])], result_scores[i]
-                ),
-            )    
+            if self.batch_size > 1:
+                plot_one_box_batch(
+                    box,
+                    self.input_img,
+                    class_id = int(result_classid[i]),
+                    label="{}:{:.2f}".format(
+                    categories[int(result_classid[i])], result_scores[i]
+                    ),
+                )
+            else:
+                plot_one_box(
+                    box,
+                    self.input_img[0],
+                    class_id = int(result_classid[i]),
+                    label="{}:{:.2f}".format(
+                    categories[int(result_classid[i])], result_scores[i]
+                    ),
+                )
     
     def add_img_annot(self, file_name, boxes, scores):
         # Store annotation per image
