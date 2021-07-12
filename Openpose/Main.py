@@ -11,6 +11,7 @@ For more information, contact us at <jw.jeong@keti.re.kr>.
 
 import sys
 import cv2
+import json
 
 from CameraZED import CameraZED
 
@@ -60,6 +61,10 @@ def main():
     else:
         serial_number = int(sys.argv[1])
     camera_wrapper = CameraZED(serial_number, INPUT_WIDTH, INPUT_HEIGHT, INPUT_FPS)
+    
+    with open ('human_pose.json', 'r') as f:
+        human_pose = json.load(f)
+    topology = trt_pose.coco.coco_category_to_topology(human_pose)
 
 if __name__ == "__main__":
     main()
