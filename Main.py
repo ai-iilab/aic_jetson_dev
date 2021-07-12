@@ -297,15 +297,25 @@ def main():
     inference_trt_wrapper = InferenceTRT(ENGINE_PATH, BATCH_SIZE, ENABLE_TIME_PROFILE)
     post_process_wrapper = PostProcessor((BATCH_SIZE, INPUT_HEIGHT, INPUT_WIDTH, 3), (BATCH_SIZE, INFER_HEIGHT, INFER_WIDTH, 3), CONF_THRESH, IOU_THRESHOLD, ENABLE_TIME_PROFILE)
     
+    batch_idx = 0
+    batch_img_arr = []
+    
     if ENABLE_DUMMY_INPUT == True:
         for index in range(0, 32):
             if ENABLE_CAMERA_LIVE is True:
                 h_img = camera_wrapper.capture_left()
+                batch_idx = 1
             else:
                 image_path = "image/test/%04d.jpg" % index
                 
                 h_img = cv2.imread(image_path)
                 if h_img is None:
+                    continue
+                
+                batch_idx += 1
+                batch_img_arr.append(h_img)
+                
+                if batch_idx < BATCH_SIZE and index + 1 != 32:
                     continue
             
             trt_thread = ThreadTRT(pre_process_wrapper, inference_trt_wrapper, post_process_wrapper, h_img, annots, "", False, False)
