@@ -8,6 +8,7 @@ Authors: Jinwoo Jeong <jw.jeong@keti.re.kr>
 The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
+import cv2
 
 def draw_fps(img, fps):
     tl = (
