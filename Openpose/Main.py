@@ -8,7 +8,11 @@ Authors: Jinwoo Jeong <jw.jeong@keti.re.kr>
 The property of program is under Korea Electronics Technology Institute.
 For more information, contact us at <jw.jeong@keti.re.kr>.
 """
+
+import sys
 import cv2
+
+from CameraZED import CameraZED
 
 def draw_fps(img, fps):
     tl = (
@@ -40,6 +44,11 @@ def draw_fps(img, fps):
 def preprocess(image):
 
 def main():
+    if len(sys.argv) == 1 :
+        serial_number = 22246603
+    else:
+        serial_number = int(sys.argv[1])
+    camera_wrapper = CameraZED(serial_number, INPUT_WIDTH, INPUT_HEIGHT, INPUT_FPS)
 
 if __name__ == "__main__":
     main()
