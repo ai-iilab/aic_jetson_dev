@@ -153,9 +153,13 @@ def main():
         if cv2.waitKey(1) >= 0:
             break
     
-    print("Avg. pre_process_time : ", pre_process_time / TOTAL_FRAME, " msec")
-    print("Avg. inference_time   : ", inference_time / TOTAL_FRAME, " msec")
-    print("Avg. post_process_time: ", post_process_time / TOTAL_FRAME, " msec")
+    total_time = pre_process_time + inference_time + post_process_time
+    print("Total frame : ", TOTAL_FRAME)
+    print("Avg. pre process time  : %0.3f msec" % (pre_process_time / TOTAL_FRAME))
+    print("Avg. inference time    : %0.3f msec" % (inference_time / TOTAL_FRAME))
+    print("Avg. post process time : %0.3f msec" % (post_process_time / TOTAL_FRAME))
+    print("Avg. total time        : %0.3f msec" % (total_time / TOTAL_FRAME))
+    print("Avg. FPS               : %0.3f FPS" % (1000 / (total_time / TOTAL_FRAME)))
 
 if __name__ == "__main__":
     main()
