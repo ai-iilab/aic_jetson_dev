@@ -1,0 +1,10 @@
+# pip install -r requirements.txt
+
+# base ----------------------------------------
+setuptools
+Cython
+numpy
+tqdm
+pycocotools
+wget
+seaborn
