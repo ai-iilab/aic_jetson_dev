@@ -9,7 +9,9 @@
 
        export OPENBLAS_CORETYPE=ARMv8
 
-   $ source ~/.profile
+   Apply the profile
+   
+       $ source ~/.profile
 
 2. Install PyTorch for NVIDIA Jetson (https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl)
 
