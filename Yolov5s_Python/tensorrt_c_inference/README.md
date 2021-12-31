@@ -53,4 +53,3 @@ sudo ./yolov5 -d yolov5.engine ../samples
 python inference_from_TRT_engine.py
 ```
 ```
-
