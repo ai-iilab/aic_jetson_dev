@@ -31,6 +31,16 @@
 
        $ ./yolov5s_w0.04_d0.33_time.sh
 
+3. Results - Inference speed (1 frame/ms). 
+               
+       |Batch|Python|TensorRT|
+       |-----|------|--------|
+       |1|26.69|15.96|
+       |2|27.05|10.75|
+       |4|17.41|6.95|
+       |8|10.53|5.75|
+       |16|8.13|5.34|
+       
 ---
 ### Openpose
 1. Install ZED SDK. (https://download.stereolabs.com/zedsdk/3.5/jp45/jetsons)
