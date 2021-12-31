@@ -1,26 +1,20 @@
-# yolov5
+# Yolov5 inference C/Python API
 
 The Pytorch implementation is [ultralytics/yolov5](https://github.com/ultralytics/yolov5).
 Original repo is [wang-xinyu/tensorrtx](https://github.com/wang-xinyu/tensorrtx).
 
-## Different versions of yolov5
-
-Currently, yolov5 trt build support v6.0.
-
-- For yolov5 v6.0, download .pt from [yolov5 release v6.0](https://github.com/ultralytics/yolov5/releases/tag/v6.0), `git clone -b v6.0 https://github.com/ultralytics/yolov5.git` and `git clone https://github.com/wang-xinyu/tensorrtx.git`, then follow how-to-run in current page.
-
 ## Config
 - Choose the model n/s/m/l/x/n6/s6/m6/l6/x6 from command line arguments.
 - Input shape defined in yololayer.h
-- Number of classes defined in yololayer.h, **DO NOT FORGET TO ADAPT THIS, If using your own model**
-- INT8/FP16/FP32 can be selected by the macro in yolov5.cpp, **INT8 need more steps, pls follow `How to Run` first and then go the `INT8 Quantization` below**
+- Number of classes defined in yololayer.h,
+- FP16/FP32 can be selected by the macro in yolov5.cpp, 
 - GPU id can be selected by the macro in yolov5.cpp
 - NMS thresh in yolov5.cpp
 - BBox confidence thresh in yolov5.cpp
 - Batch size in yolov5.cpp
 
 ## How to Run, yolov5s as example
-1. generate .wts from pytorch with .pt, or download .wts from model zoo
+1. Generate .wts from pytorch with .pt, or download .wts from model zoo
 ```
 // clone code according to above #Different versions of yolov5
 // download https://github.com/ultralytics/yolov5/releases/download/v6.0/yolov5s.pt
@@ -30,7 +24,7 @@ python gen_wts.py -w yolov5s.pt -o yolov5s.wts
 // a file 'yolov5s.wts' will be generated.
 ```
 
-2. build tensorrtx/yolov5 and run
+2. Build tensorrtx/yolov5 and run
 
 ```
 cd {tensorrtx}/yolov5/
@@ -50,7 +44,11 @@ sudo ./yolov5 -s yolov5_custom.wts yolov5.engine c 0.17 0.25
 sudo ./yolov5 -d yolov5.engine ../samples
 ```
 ```
-## More Information
 
-See the readme in [home page.](https://github.com/wang-xinyu/tensorrtx)
+3. Check the images generated
+
+```
+// install python-tensorrt, pycuda, etc.
+// ensure the yolov5s.engine and libmyplugins.so have been built
+python inference_from_TRT_engine.py
 
