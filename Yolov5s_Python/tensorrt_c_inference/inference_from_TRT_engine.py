@@ -54,7 +54,7 @@ class YoLov5TRT(object):
         bindings = []
 
         for binding in engine:
-            print('bingding:', binding, engine.get_binding_shape(binding))
+            #print('bingding:', binding, engine.get_binding_shape(binding))
             size = trt.volume(engine.get_binding_shape(binding)) * engine.max_batch_size
             dtype = trt.nptype(engine.get_binding_dtype(binding))
             # Allocate host and device buffers
@@ -338,7 +338,7 @@ class inferThread(threading.Thread):
             save_name = os.path.join('output', filename)
             # Save image
             cv2.imwrite(save_name, batch_image_raw[i])
-        print('input->{}, time->{:.2f}ms, saving into output/'.format(self.image_path_batch, use_time * 1000))
+        #print('input->{}, time->{:.2f}ms, saving into output/'.format(self.image_path_batch, use_time * 1000))
 
 
 class warmUpThread(threading.Thread):
@@ -348,7 +348,7 @@ class warmUpThread(threading.Thread):
 
     def run(self):
         batch_image_raw, use_time = self.yolov5_wrapper.infer(self.yolov5_wrapper.get_raw_image_zeros())
-        print('warm_up->{}, time->{:.2f}ms'.format(batch_image_raw[0].shape, use_time * 1000))
+        #print('warm_up->{}, time->{:.2f}ms'.format(batch_image_raw[0].shape, use_time * 1000))
 
 
 
@@ -370,12 +370,13 @@ if __name__ == "__main__":
     # a YoLov5TRT instance
     yolov5_wrapper = YoLov5TRT(engine_file_path)
     try:
-        print('batch size is', yolov5_wrapper.batch_size)
+        #print('batch size is', yolov5_wrapper.batch_size)
         
         image_dir = "samples/"
         image_path_batches = get_img_path_batches(yolov5_wrapper.batch_size, image_dir)
 
-        for i in range(10):
+        warm_thread_number = 10
+        for i in range(warm_thread_number):
             # create a new thread to do warm_up
             thread1 = warmUpThread(yolov5_wrapper)
             thread1.start()
