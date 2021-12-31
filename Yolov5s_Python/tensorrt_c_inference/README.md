@@ -45,10 +45,12 @@ sudo ./yolov5 -d yolov5.engine ../samples
 ```
 ```
 
-3. Check the images generated
+3. Inference the images generated
 
 ```
 // install python-tensorrt, pycuda, etc.
 // ensure the yolov5s.engine and libmyplugins.so have been built
 python inference_from_TRT_engine.py
+```
+```
 
